@@ -139,7 +139,7 @@ spec:
         image: 4edeploy/4ebusinesscore-controlpanal-usermanagement:2.0.263
         env:
         - name: ConnectionStrings__DefaultConnection
-          value: "Data Source=10.21.10.144;Initial Catalog=4EPlatform.ControlPanel.UserManagement;User ID=SVC_SmartView;Password=SVC@123456;Max Pool Size=200;Integrated Security=false;MultipleActiveResultSets=True;TrustServerCertificate=True;"
+          value: "Data Source=57.129.28.126;Initial Catalog=4EPlatform.ControlPanel.UserManagement;User ID=sa;Password=bpQeeVgNQs9qY$;Max Pool Size=200;Integrated Security=false;MultipleActiveResultSets=True;TrustServerCertificate=True;"
         - name: IdentityUrl
           value: "http://usermanagement-service:5111/"
         - name: GrpcServiceSettings__UserManagementUrl
@@ -195,7 +195,7 @@ spec:
         - name: GrpcServiceSettings__PlatformSettingsUrl
           value: "http://platformsetting-service:7297/"
         - name: GrpcServiceSettings__OrgSettingsUrl
-          value: "http://10.21.10.144:7039/"
+          value: "http://57.129.28.126:7039/"
         - name: GrpcServiceSettings__TicketingSystemAggregator
           value: "http://ticketingagg-service:7243/"
         - name: GrpcServiceSettings__NewsAggregator
@@ -244,7 +244,7 @@ spec:
         image: 4edeploy/4ebusinesscore-pontrolpanal-orghierararchy:2.0.263
         env:
         - name: ConnectionStrings__DefaultConnection
-          value: "Data Source=10.21.10.144;Initial Catalog=4EPlatform.ControlPanel.OrgHierarchy;User ID=SVC_SmartView;Password=SVC@123456;Integrated Security=false;MultipleActiveResultSets=True;TrustServerCertificate=True;"
+          value: "Data Source=57.129.28.126;Initial Catalog=4EPlatform.ControlPanel.OrgHierarchy;User ID=sa;Password=bpQeeVgNQs9qY$;Integrated Security=false;MultipleActiveResultSets=True;TrustServerCertificate=True;"
         - name: IdentityUrl
           value: "http://usermanagement-service:5111/"
         - name: GrpcServiceSettings__UserManagementUrl
@@ -292,7 +292,7 @@ spec:
         image: 4edeploy/4ebusinesscore-controlpanal-platformsettings:2.0.263
         env:
         - name: ConnectionStrings__DefaultConnection
-          value: "Data Source=10.21.10.144;Initial Catalog=4EPlatform.ControlPanel.SystemSetting;User ID=SVC_SmartView;Password=SVC@123456;Integrated Security=false;MultipleActiveResultSets=True;TrustServerCertificate=True;"
+          value: "Data Source=57.129.28.126;Initial Catalog=4EPlatform.ControlPanel.SystemSetting;User ID=sa;Password=bpQeeVgNQs9qY$;Integrated Security=false;MultipleActiveResultSets=True;TrustServerCertificate=True;"
         - name: IdentityUrl
           value: "http://usermanagement-service:5111/"
         - name: GrpcServiceSettings__UserManagementUrl
@@ -340,7 +340,7 @@ spec:
         image: 4edeploy/4ebusinesscore-controlpanal-subsystemsettings:2.0.263
         env:
         - name: ConnectionStrings__DefaultConnection
-          value: "Data Source=10.21.10.144;Initial Catalog=4EPlatform.ControlPanel.WorkSpace;User ID=SVC_SmartView;Password=SVC@123456;Integrated Security=false;MultipleActiveResultSets=True;TrustServerCertificate=True;"
+          value: "Data Source=57.129.28.126;Initial Catalog=4EPlatform.ControlPanel.WorkSpace;User ID=sa;Password=bpQeeVgNQs9qY$;Integrated Security=false;MultipleActiveResultSets=True;TrustServerCertificate=True;"
         - name: IdentityUrl
           value: "http://usermanagement-service:5111/"
         - name: GrpcServiceSettings__UserManagementUrl
@@ -388,7 +388,7 @@ spec:
         image: 4edeploy/4ebusinesscore-ticketingsystem-sla:2.0.263
         env:
         - name: ConnectionStrings__DefaultConnection
-          value: "Data Source=10.21.10.144;Initial Catalog=4EPlatform.TicketingSystem.SLA;User ID=SVC_SmartView;Password=SVC@123456;Integrated Security=false;MultipleActiveResultSets=True;TrustServerCertificate=True;"
+          value: "Data Source=57.129.28.126;Initial Catalog=4EPlatform.TicketingSystem.SLA;User ID=sa;Password=bpQeeVgNQs9qY$;Integrated Security=false;MultipleActiveResultSets=True;TrustServerCertificate=True;"
         - name: IdentityUrl
           value: "http://usermanagement-service:5111/"
         - name: GrpcServiceSettings__UserManagementUrl
@@ -436,7 +436,7 @@ spec:
         image: 4edeploy/4beusinesscore-ticketingsystem-serviceoperations:2.0.263
         env:
         - name: ConnectionStrings__DefaultConnection
-          value: "Data Source=10.21.10.144;Initial Catalog=4EPlatform.TicketingSystem.ServiceOperations;User ID=SVC_SmartView;Password=SVC@123456;Integrated Security=false;MultipleActiveResultSets=True;TrustServerCertificate=True;"
+          value: "Data Source=57.129.28.126;Initial Catalog=4EPlatform.TicketingSystem.ServiceOperations;User ID=sa;Password=bpQeeVgNQs9qY$;Integrated Security=false;MultipleActiveResultSets=True;TrustServerCertificate=True;"
         - name: IdentityUrl
           value: "http://usermanagement-service:5111/"
         - name: GrpcServiceSettings__UserManagementUrl
@@ -484,7 +484,7 @@ spec:
         image: 4edeploy/4ebusinesscore-ticketingsystem-faq:2.0.263
         env:
         - name: ConnectionStrings__DefaultConnection
-          value: "Data Source=10.21.10.144;Initial Catalog=4EPlatform.TicketingSystem.FAQ;User ID=SVC_SmartView;Password=SVC@123456;Integrated Security=false;MultipleActiveResultSets=True;TrustServerCertificate=True;"
+          value: "Data Source=57.129.28.126;Initial Catalog=4EPlatform.TicketingSystem.FAQ;User ID=sa;Password=bpQeeVgNQs9qY$;Integrated Security=false;MultipleActiveResultSets=True;TrustServerCertificate=True;"
         - name: IdentityUrl
           value: "http://usermanagement-service:5111/"
         - name: GrpcServiceSettings__UserManagementUrl
@@ -532,7 +532,7 @@ spec:
         image: 4edeploy/4ebusinesscore-ticketingsystem-servicemangement:2.0.263
         env:
         - name: ConnectionStrings__DefaultConnection
-          value: "Data Source=10.21.10.144;Initial Catalog=4EPlatform.TicketingSystem.ServiceManagement;User ID=SVC_SmartView;Password=SVC@123456;Integrated Security=false;MultipleActiveResultSets=True;TrustServerCertificate=True;"
+          value: "Data Source=57.129.28.126;Initial Catalog=4EPlatform.TicketingSystem.ServiceManagement;User ID=sa;Password=bpQeeVgNQs9qY$;Integrated Security=false;MultipleActiveResultSets=True;TrustServerCertificate=True;"
         - name: IdentityUrl
           value: "http://usermanagement-service:5111/"
         - name: GrpcServiceSettings__UserManagementUrl
@@ -651,7 +651,7 @@ spec:
         image: 4edeploy/4ebusinesscore-dynamicworkflow-workflow:2.0.263
         env:
         - name: ConnectionStrings__DefaultConnection
-          value: "Data Source=10.21.10.144;Initial Catalog=4EPlatform.Workflow.DynamicWorkFlow;User ID=SVC_SmartView;Password=SVC@123456;Integrated Security=false;MultipleActiveResultSets=True;TrustServerCertificate=True;"
+          value: "Data Source=57.129.28.126;Initial Catalog=4EPlatform.Workflow.DynamicWorkFlow;User ID=sa;Password=bpQeeVgNQs9qY$;Integrated Security=false;MultipleActiveResultSets=True;TrustServerCertificate=True;"
         - name: GrpcServiceSettings__DynamicWorkFlowAggUrl
           value: "http://dynamicworkflowagg-service:7244/"
         - name: IdentityUrl
@@ -778,7 +778,7 @@ spec:
        image: 4edeploy/4ebusinesscore-knowledgemanagement-ideabank:2.0.263
        env:
        - name: ConnectionStrings__DefaultConnection
-         value: "Data Source=10.21.10.144;Initial Catalog=4EPlatform.KnowledgeManagement.IdeaBank;User ID=SVC_SmartView;Password=SVC@123456;Integrated Security=false;MultipleActiveResultSets=True;TrustServerCertificate=True;"
+         value: "Data Source=57.129.28.126;Initial Catalog=4EPlatform.KnowledgeManagement.IdeaBank;User ID=sa;Password=bpQeeVgNQs9qY$;Integrated Security=false;MultipleActiveResultSets=True;TrustServerCertificate=True;"
        - name: IdentityUrl
          value: "http://usermanagement-service:5111/"
        - name: GrpcServiceSettings__UserManagementUrl
@@ -826,7 +826,7 @@ spec:
         image: 4edeploy/4ebusinesscore-knowledgemanagement-challenges:2.0.263
         env:
         - name: ConnectionStrings__DefaultConnection
-          value: "Data Source=10.21.10.144;Initial Catalog=4EPlatform.KnowledgeManagement.Challenges;User ID=SVC_SmartView;Password=SVC@123456;Integrated Security=false;MultipleActiveResultSets=True;TrustServerCertificate=True;"
+          value: "Data Source=57.129.28.126;Initial Catalog=4EPlatform.KnowledgeManagement.Challenges;User ID=sa;Password=bpQeeVgNQs9qY$;Integrated Security=false;MultipleActiveResultSets=True;TrustServerCertificate=True;"
         - name: IdentityUrl
           value: "http://usermanagement-service:5111/"
         - name: GrpcServiceSettings__UserManagementUrl
@@ -874,7 +874,7 @@ spec:
         image: 4edeploy/4ebusinesscore-knowledgemanagement-knowledge:2.0.263
         env:
         - name: ConnectionStrings__DefaultConnection
-          value: "Data Source=10.21.10.144;Initial Catalog=4EPlatform.KnowledgeManagement.Knowledge;User ID=SVC_SmartView;Password=SVC@123456;Integrated Security=false;MultipleActiveResultSets=True;TrustServerCertificate=True;"
+          value: "Data Source=57.129.28.126;Initial Catalog=4EPlatform.KnowledgeManagement.Knowledge;User ID=sa;Password=bpQeeVgNQs9qY$;Integrated Security=false;MultipleActiveResultSets=True;TrustServerCertificate=True;"
         - name: IdentityUrl
           value: "http://usermanagement-service:5111/"
         - name: GrpcServiceSettings__UserManagementUrl
@@ -922,7 +922,7 @@ spec:
         image: 4edeploy/4ebusinesscore-knowledgemanagement-blog:2.0.263
         env:
         - name: ConnectionStrings__DefaultConnection
-          value: "Data Source=10.21.10.144;Initial Catalog=4EPlatform.KnowledgeManagement.Blog;User ID=SVC_SmartView;Password=SVC@123456;Integrated Security=false;MultipleActiveResultSets=True;TrustServerCertificate=True;"
+          value: "Data Source=57.129.28.126;Initial Catalog=4EPlatform.KnowledgeManagement.Blog;User ID=sa;Password=bpQeeVgNQs9qY$;Integrated Security=false;MultipleActiveResultSets=True;TrustServerCertificate=True;"
         - name: IdentityUrl
           value: "http://usermanagement-service:5111/"
         - name: GrpcServiceSettings__UserManagementUrl
@@ -970,7 +970,7 @@ spec:
         image: 4edeploy/4ebusinesscore-knowledgemanagement-askexpert:2.0.263
         env:
         - name: ConnectionStrings__DefaultConnection
-          value: "Data Source=10.21.10.144;Initial Catalog=4EPlatform.KnowledgeManagement.AskExpert;User ID=SVC_SmartView;Password=SVC@123456;Integrated Security=false;MultipleActiveResultSets=True;TrustServerCertificate=True;"
+          value: "Data Source=57.129.28.126;Initial Catalog=4EPlatform.KnowledgeManagement.AskExpert;User ID=sa;Password=bpQeeVgNQs9qY$;Integrated Security=false;MultipleActiveResultSets=True;TrustServerCertificate=True;"
         - name: IdentityUrl
           value: "http://usermanagement-service:5111/"
         - name: GrpcServiceSettings__UserManagementUrl
@@ -1078,7 +1078,7 @@ spec:
         image: 4edeploy/4ebusinesscore-committee:2.0.263
         env:
         - name: ConnectionStrings__DefaultConnection
-          value: "Data Source=10.21.10.144;Initial Catalog=4EPlatform.CommitteeManagement.Committee;User ID=SVC_SmartView;Password=SVC@123456;Integrated Security=false;MultipleActiveResultSets=True;TrustServerCertificate=True;"
+          value: "Data Source=57.129.28.126;Initial Catalog=4EPlatform.CommitteeManagement.Committee;User ID=sa;Password=bpQeeVgNQs9qY$;Integrated Security=false;MultipleActiveResultSets=True;TrustServerCertificate=True;"
         - name: IdentityUrl
           value: "http://usermanagement-service:5111/"
         - name: GrpcServiceSettings__UserManagmentUrl
@@ -1126,7 +1126,7 @@ spec:
         image: 4edeploy/4ebusinesscore-committee-aggregator:2.0.263
         env:
         - name: ConnectionStrings__DefaultConnection
-          value: "Data Source=10.21.10.144;Initial Catalog=4EPlatform.CommitteeManagement.Committee;User ID=SVC_SmartView;Password=SVC@123456;Integrated Security=false;MultipleActiveResultSets=True;TrustServerCertificate=True;"
+          value: "Data Source=57.129.28.126;Initial Catalog=4EPlatform.CommitteeManagement.Committee;User ID=sa;Password=bpQeeVgNQs9qY$;Integrated Security=false;MultipleActiveResultSets=True;TrustServerCertificate=True;"
         - name: IdentityUrl
           value: "http://usermanagement-service:5111/"
         - name: GrpcServiceSettings__CPAggregatorUrl
@@ -1182,7 +1182,7 @@ spec:
         image: 4edeploy/4ebusinesscore-digitalmedia-orgdefination:2.0.263
         env:
         - name: ConnectionStrings__DefaultConnection
-          value: "Data Source=10.21.10.144;Initial Catalog=4EPlatform.DigitalMedia.AuthorityDefination;User ID=SVC_SmartView;Password=SVC@123456;Integrated Security=false;MultipleActiveResultSets=True;TrustServerCertificate=True;"
+          value: "Data Source=57.129.28.126;Initial Catalog=4EPlatform.DigitalMedia.AuthorityDefination;User ID=sa;Password=bpQeeVgNQs9qY$;Integrated Security=false;MultipleActiveResultSets=True;TrustServerCertificate=True;"
         - name: IdentityUrl
           value: "http://usermanagement-service:5111/"
         - name: GrpcServiceSettings__UserManagementUrl
@@ -1284,7 +1284,7 @@ spec:
         image: 4edeploy/4ebusinesscore-digitalmedia-news:2.0.263
         env:
         - name: ConnectionStrings__DefaultConnection
-          value: "Data Source=10.21.10.144;Initial Catalog=4EPlatform_DigitalMedia_News;User ID=SVC_SmartView;Password=SVC@123456;Integrated Security=false;MultipleActiveResultSets=True;TrustServerCertificate=True;"
+          value: "Data Source=57.129.28.126;Initial Catalog=4EPlatform_DigitalMedia_News;User ID=sa;Password=bpQeeVgNQs9qY$;Integrated Security=false;MultipleActiveResultSets=True;TrustServerCertificate=True;"
         - name: IdentityUrl
           value: "http://usermanagement-service:5111/"
         - name: GrpcServiceSettings__UserManagementUrl
@@ -1332,7 +1332,7 @@ spec:
         image: 4edeploy/4ebusinesscore-notification-notification:2.0.263
         env:
         - name: ConnectionStrings__DefaultConnection
-          value: "Data Source=10.21.10.144;Initial Catalog=4EPlatform.Notification.NotificationSettings;User ID=SVC_SmartView;Password=SVC@123456;Integrated Security=false;MultipleActiveResultSets=True;TrustServerCertificate=True;"
+          value: "Data Source=57.129.28.126;Initial Catalog=4EPlatform.Notification.NotificationSettings;User ID=sa;Password=bpQeeVgNQs9qY$;Integrated Security=false;MultipleActiveResultSets=True;TrustServerCertificate=True;"
         - name: IdentityUrl
           value: "http://usermanagement-service:5111/"
         - name: GrpcServiceSettings__UserManagementUrl
@@ -1450,7 +1450,7 @@ spec:
         - name: IdentityUrl
           value: "http://usermanagement-service:5111/"
         - name: ConnectionStrings__DefaultConnection
-          value: "Data Source=10.21.10.144;Initial Catalog=4EPlatform.DigitalMedia.Events;User ID=SVC_SmartView;Password=SVC@123456;Integrated Security=false;MultipleActiveResultSets=True;TrustServerCertificate=True;"
+          value: "Data Source=57.129.28.126;Initial Catalog=4EPlatform.DigitalMedia.Events;User ID=sa;Password=bpQeeVgNQs9qY$;Integrated Security=false;MultipleActiveResultSets=True;TrustServerCertificate=True;"
         - name: GrpcServiceSettings__UserManagementUrl
           value: "http://usermanagement-service:7152/"
         - name: permesstionUrl
@@ -1498,7 +1498,7 @@ spec:
         - name: IdentityUrl
           value: "http://usermanagement-service:5111/"
         - name: ConnectionStrings__DefaultConnection
-          value: "Data Source=10.21.10.144;Initial Catalog=4EPlatform.DigitalMedia.Circulars;User ID=SVC_SmartView;Password=SVC@123456;Integrated Security=false;MultipleActiveResultSets=True;TrustServerCertificate=True;"
+          value: "Data Source=57.129.28.126;Initial Catalog=4EPlatform.DigitalMedia.Circulars;User ID=sa;Password=bpQeeVgNQs9qY$;Integrated Security=false;MultipleActiveResultSets=True;TrustServerCertificate=True;"
         - name: GrpcServiceSettings__UserManagementUrl
           value: "http://usermanagement-service:7152/"
         - name: GrpcServiceSettings__CPAggregatorUrl
@@ -1568,7 +1568,7 @@ spec:
         image: 4edeploy/4ebusinesscore-visitormanagement:2.0.263
         env:
         - name: ConnectionStrings__DefaultConnection
-          value: "Data Source=10.21.10.144;Initial Catalog=4EPlatform.VisitorManagement;User ID=SVC_SmartView;Password=SVC@123456;Integrated Security=false;MultipleActiveResultSets=True;TrustServerCertificate=True;"
+          value: "Data Source=57.129.28.126;Initial Catalog=4EPlatform.VisitorManagement;User ID=sa;Password=bpQeeVgNQs9qY$;Integrated Security=false;MultipleActiveResultSets=True;TrustServerCertificate=True;"
         - name: IdentityUrl
           value: "http://usermanagement-service:5111/"
         - name: GrpcServiceSettings__UserManagementUrl
@@ -1686,7 +1686,7 @@ spec:
         image: 4edeploy/4ebusinesscore-training:2.0.263
         env:
         - name: ConnectionStrings__DefaultConnection
-          value: "Data Source=10.21.10.144;Initial Catalog=4EPlatform.ControlPanel.Training;User ID=SVC_SmartView;Password=SVC@123456;Integrated Security=false;MultipleActiveResultSets=True;TrustServerCertificate=True;"
+          value: "Data Source=57.129.28.126;Initial Catalog=4EPlatform.ControlPanel.Training;User ID=sa;Password=bpQeeVgNQs9qY$;Integrated Security=false;MultipleActiveResultSets=True;TrustServerCertificate=True;"
         - name: IdentityUrl
           value: "http://usermanagement-service:5111/"
         - name: GrpcServiceSettings__UserManagementUrl
@@ -1802,7 +1802,7 @@ spec:
         image: 4edeploy/4ebusinesscore-legalmanagement:2.0.263
         env:
         - name: ConnectionStrings__DefaultConnection
-          value: "Data Source=10.21.10.144;Initial Catalog=4EPlatform.ControlPanel.legalmanagement;User ID=SVC_SmartView;Password=SVC@123456;Integrated Security=false;MultipleActiveResultSets=True;TrustServerCertificate=True;"
+          value: "Data Source=57.129.28.126;Initial Catalog=4EPlatform.ControlPanel.legalmanagement;User ID=sa;Password=bpQeeVgNQs9qY$;Integrated Security=false;MultipleActiveResultSets=True;TrustServerCertificate=True;"
         - name: IdentityUrl
           value: "http://usermanagement-service:5111/"
         - name: permesstionUrl
@@ -1964,7 +1964,7 @@ spec:
         image: 4edeploy/4ebusinesscore-strategictelecom-loyalty:2.0.263
         env:
         - name: ConnectionStrings__DefaultConnection
-          value: "Data Source=10.21.10.144;Initial Catalog=4EPlatform.ControlPanel.strategictelecomloyalty;User ID=SVC_SmartView;Password=SVC@123456;Integrated Security=false;MultipleActiveResultSets=True;TrustServerCertificate=True;"
+          value: "Data Source=57.129.28.126;Initial Catalog=4EPlatform.ControlPanel.strategictelecomloyalty;User ID=sa;Password=bpQeeVgNQs9qY$;Integrated Security=false;MultipleActiveResultSets=True;TrustServerCertificate=True;"
         - name: IdentityUrl
           value: "http://usermanagement-service:5111/"
         - name: permesstionUrl
@@ -2016,7 +2016,7 @@ spec:
         image: 4edeploy/4ebusinesscore-strategictelecom-thanks:2.0.263
         env:
         - name: ConnectionStrings__DefaultConnection
-          value: "Data Source=10.21.10.144;Initial Catalog=4EPlatform.ControlPanel.strategictelecomthanks;User ID=SVC_SmartView;Password=SVC@123456;Integrated Security=false;MultipleActiveResultSets=True;TrustServerCertificate=True;"
+          value: "Data Source=57.129.28.126;Initial Catalog=4EPlatform.ControlPanel.strategictelecomthanks;User ID=sa;Password=bpQeeVgNQs9qY$;Integrated Security=false;MultipleActiveResultSets=True;TrustServerCertificate=True;"
         - name: IdentityUrl
           value: "http://usermanagement-service:5111/"
         - name: permesstionUrl
@@ -2068,7 +2068,7 @@ spec:
         image: 4edeploy/4ebusinesscore-strategictelecom-congratulations:2.0.263
         env:
         - name: ConnectionStrings__DefaultConnection
-          value: "Data Source=10.21.10.144;Initial Catalog=4EPlatform.ControlPanel.strategictelecomcongratulations;User ID=SVC_SmartView;Password=SVC@123456;Integrated Security=false;MultipleActiveResultSets=True;TrustServerCertificate=True;"
+          value: "Data Source=57.129.28.126;Initial Catalog=4EPlatform.ControlPanel.strategictelecomcongratulations;User ID=sa;Password=bpQeeVgNQs9qY$;Integrated Security=false;MultipleActiveResultSets=True;TrustServerCertificate=True;"
         - name: IdentityUrl
           value: "http://usermanagement-service:5111/"
         - name: permesstionUrl
@@ -2120,7 +2120,7 @@ spec:
         image: 4edeploy/4ebusinesscore-strategictelecom-medals:2.0.263
         env:
         - name: ConnectionStrings__DefaultConnection
-          value: "Data Source=10.21.10.144;Initial Catalog=4EPlatform.ControlPanel.strategictelecommedals;User ID=SVC_SmartView;Password=SVC@123456;Integrated Security=false;MultipleActiveResultSets=True;TrustServerCertificate=True;"
+          value: "Data Source=57.129.28.126;Initial Catalog=4EPlatform.ControlPanel.strategictelecommedals;User ID=sa;Password=bpQeeVgNQs9qY$;Integrated Security=false;MultipleActiveResultSets=True;TrustServerCertificate=True;"
         - name: IdentityUrl
           value: "http://usermanagement-service:5111/"
         - name: permesstionUrl
@@ -2172,7 +2172,7 @@ spec:
         image: 4edeploy/4ebusinesscore-riskmanagement:2.0.263
         env:
         - name: ConnectionStrings__DefaultConnection
-          value: "Data Source=10.21.10.144;Initial Catalog=4EPlatform.ControlPanel.riskmanagement;User ID=SVC_SmartView;Password=SVC@123456;Integrated Security=false;MultipleActiveResultSets=True;TrustServerCertificate=True;"
+          value: "Data Source=57.129.28.126;Initial Catalog=4EPlatform.ControlPanel.riskmanagement;User ID=sa;Password=bpQeeVgNQs9qY$;Integrated Security=false;MultipleActiveResultSets=True;TrustServerCertificate=True;"
         - name: IdentityUrl
           value: "http://usermanagement-service:5111/"
         - name: permesstionUrl

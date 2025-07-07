@@ -7,10 +7,10 @@ spec:
   ingressClassName: public
   tls:
     - hosts:
-        - dev-qimah.rega.gov.sa
+        - bcoretest.4explain.net
       secretName: rega-tls
   rules:
-    - host: dev-qimah.rega.gov.sa
+    - host: bcoretest.4explain.net
       http:
         paths:
           - path: /
@@ -53,10 +53,10 @@ spec:
   ingressClassName: public
   tls:
     - hosts:
-        - qimahdev-api.rega.gov.sa
+        - bcoretestapi.4explain.net
       secretName: rega-tls
   rules:
-  - host: qimahdev-api.rega.gov.sa
+  - host: bcoretestapi.4explain.net
     http:
       paths:
       - path: /usermanagement(/|$)(.*)
@@ -78,7 +78,7 @@ metadata:
 spec:
   ingressClassName: public
   rules:
-  - host: qimahdev-api.rega.gov.sa
+  - host: bcoretestapi.4explain.net
     http:
       paths:
       - path: /usermanagementgrpc(/|$)(.*)
@@ -100,10 +100,10 @@ spec:
   ingressClassName: public
   tls:
     - hosts:
-        - qimahdev-api.rega.gov.sa
+        - bcoretestapi.4explain.net
       secretName: rega-tls
   rules:
-  - host: qimahdev-api.rega.gov.sa
+  - host: bcoretestapi.4explain.net
     http:
       paths:
       - path: /controlpanelagg(/|$)(.*)
@@ -125,10 +125,10 @@ spec:
   ingressClassName: public
   tls:
     - hosts:
-        - qimahdev-api.rega.gov.sa
+        - bcoretestapi.4explain.net
       secretName: rega-tls
   rules:
-  - host: qimahdev-api.rega.gov.sa
+  - host: bcoretestapi.4explain.net
     http:
       paths:
       - path: /org(/|$)(.*)
@@ -150,7 +150,7 @@ metadata:
 spec:
   ingressClassName: public
   rules:
-  - host: qimahdev-api.rega.gov.sa
+  - host: bcoretestapi.4explain.net
     http:
       paths:
       - path: /orggrpc(/|$)(.*)
@@ -175,10 +175,10 @@ spec:
   ingressClassName: public
   tls:
     - hosts:
-        - qimahdev-api.rega.gov.sa
+        - bcoretestapi.4explain.net
       secretName: rega-tls
   rules:
-  - host: qimahdev-api.rega.gov.sa
+  - host: bcoretestapi.4explain.net
     http:
       paths:
       - path: /platformsetting(/|$)(.*)
@@ -200,10 +200,10 @@ spec:
   ingressClassName: public
   tls:
     - hosts:
-        - qimahdev-api.rega.gov.sa
+        - bcoretestapi.4explain.net
       secretName: rega-tls
   rules:
-  - host: qimahdev-api.rega.gov.sa
+  - host: bcoretestapi.4explain.net
     http:
       paths:
       - path: /subsystemsetting(/|$)(.*)
@@ -224,7 +224,7 @@ metadata:
 spec:
   ingressClassName: public
   rules:
-  - host: qimahdev-api.rega.gov.sa
+  - host: bcoretestapi.4explain.net
     http:
       paths:
       - path: /ticketingsla(/|$)(.*)
@@ -246,10 +246,10 @@ spec:
   ingressClassName: public
   tls:
     - hosts:
-        - qimahdev-api.rega.gov.sa
+        - bcoretestapi.4explain.net
       secretName: rega-tls
   rules:
-  - host: qimahdev-api.rega.gov.sa
+  - host: bcoretestapi.4explain.net
     http:
       paths:
       - path: /ticketingserviceops(/|$)(.*)
@@ -271,10 +271,10 @@ spec:
   ingressClassName: public
   tls:
     - hosts:
-        - qimahdev-api.rega.gov.sa
+        - bcoretestapi.4explain.net
       secretName: rega-tls
   rules:
-  - host: qimahdev-api.rega.gov.sa
+  - host: bcoretestapi.4explain.net
     http:
       paths:
       - path: /ticketingfaq(/|$)(.*)
@@ -295,7 +295,7 @@ metadata:
 spec:
   ingressClassName: public
   rules:
-  - host: qimahdev-api.rega.gov.sa
+  - host: bcoretestapi.4explain.net
     http:
       paths:
       - path: /ticketingservicemanagement(/|$)(.*)
@@ -316,7 +316,7 @@ metadata:
 spec:
   ingressClassName: public
   rules:
-  - host: qimahdev-api.rega.gov.sa
+  - host: bcoretestapi.4explain.net
     http:
       paths:
       - path: /ticketingagg(/|$)(.*)
@@ -338,10 +338,10 @@ spec:
   ingressClassName: public
   tls:
     - hosts:
-        - qimahdev-api.rega.gov.sa
+        - bcoretestapi.4explain.net
       secretName: rega-tls
   rules:
-  - host: qimahdev-api.rega.gov.sa
+  - host: bcoretestapi.4explain.net
     http:
       paths:
       - path: /dynamicworkflow(/|$)(.*)
@@ -364,10 +364,10 @@ spec:
   ingressClassName: public
   tls:
     - hosts:
-        - qimahdev-api.rega.gov.sa
+        - bcoretestapi.4explain.net
       secretName: rega-tls
   rules:
-  - host: qimahdev-api.rega.gov.sa
+  - host: bcoretestapi.4explain.net
     http:
       paths:
       - path: /dynamicworkflowgrpc(/|$)(.*)
@@ -389,10 +389,10 @@ spec:
   ingressClassName: public
   tls:
     - hosts:
-        - qimahdev-api.rega.gov.sa
+        - bcoretestapi.4explain.net
       secretName: rega-tls
   rules:
-  - host: qimahdev-api.rega.gov.sa
+  - host: bcoretestapi.4explain.net
     http:
       paths:
       - path: /dynamicworkflowagg(/|$)(.*)
@@ -416,7 +416,7 @@ metadata:
 spec:
   ingressClassName: public
   rules:
-  - host: qimahdev-api.rega.gov.sa
+  - host: bcoretestapi.4explain.net
     http:
       paths:
       - path: /ideabank(/|$)(.*)
@@ -439,7 +439,7 @@ metadata:
 spec:
   ingressClassName: public
   rules:
-  - host: qimahdev-api.rega.gov.sa
+  - host: bcoretestapi.4explain.net
     http:
       paths:
       - path: /challenges(/|$)(.*)
@@ -462,7 +462,7 @@ metadata:
 spec:
   ingressClassName: public
   rules:
-  - host: qimahdev-api.rega.gov.sa
+  - host: bcoretestapi.4explain.net
     http:
       paths:
       - path: /knowledge(/|$)(.*)
@@ -485,7 +485,7 @@ metadata:
 spec:
   ingressClassName: public
   rules:
-  - host: qimahdev-api.rega.gov.sa
+  - host: bcoretestapi.4explain.net
     http:
       paths:
       - path: /blog(/|$)(.*)
@@ -506,7 +506,7 @@ metadata:
 spec:
   ingressClassName: public
   rules:
-  - host: qimahdev-api.rega.gov.sa
+  - host: bcoretestapi.4explain.net
     http:
       paths:
       - path: /askexpert(/|$)(.*)
@@ -527,7 +527,7 @@ metadata:
 spec:
   ingressClassName: public
   rules:
-  - host: qimahdev-api.rega.gov.sa
+  - host: bcoretestapi.4explain.net
     http:
       paths:
       - path: /knowledgeagg(/|$)(.*)
@@ -550,7 +550,7 @@ metadata:
 spec:
   ingressClassName: public
   rules:
-  - host: qimahdev-api.rega.gov.sa
+  - host: bcoretestapi.4explain.net
     http:
       paths:
       - path: /committee(/|$)(.*)
@@ -571,7 +571,7 @@ metadata:
 spec:
   ingressClassName: public
   rules:
-  - host: qimahdev-api.rega.gov.sa
+  - host: bcoretestapi.4explain.net
     http:
       paths:
       - path: /committeeagg(/|$)(.*)
@@ -594,7 +594,7 @@ metadata:
 spec:
   ingressClassName: public
   rules:
-  - host: qimahdev-api.rega.gov.sa
+  - host: bcoretestapi.4explain.net
     http:
       paths:
       - path: /orgdefination(/|$)(.*)
@@ -616,10 +616,10 @@ spec:
   ingressClassName: public
   tls:
     - hosts:
-        - qimahdev-api.rega.gov.sa
+        - bcoretestapi.4explain.net
       secretName: rega-tls
   rules:
-  - host: qimahdev-api.rega.gov.sa
+  - host: bcoretestapi.4explain.net
     http:
       paths:
       - path: /digitalagg(/|$)(.*)
@@ -643,10 +643,10 @@ spec:
   ingressClassName: public
   tls:
     - hosts:
-        - qimahdev-api.rega.gov.sa
+        - bcoretestapi.4explain.net
       secretName: rega-tls
   rules:
-  - host: qimahdev-api.rega.gov.sa
+  - host: bcoretestapi.4explain.net
     http:
       paths:
       - path: /digitalnews(/|$)(.*)
@@ -667,7 +667,7 @@ metadata:
 spec:
   ingressClassName: public
   rules:
-  - host: qimahdev-api.rega.gov.sa
+  - host: bcoretestapi.4explain.net
     http:
       paths:
       - path: /notification(/|$)(.*)
@@ -688,7 +688,7 @@ metadata:
 spec:
   ingressClassName: public
   rules:
-  - host: qimahdev-api.rega.gov.sa
+  - host: bcoretestapi.4explain.net
     http:
       paths:
       - path: /notificationagg(/|$)(.*)
@@ -709,7 +709,7 @@ metadata:
 spec:
   ingressClassName: public
   rules:
-  - host: qimahdev-api.rega.gov.sa
+  - host: bcoretestapi.4explain.net
     http:
       paths:
       - path: /pmo(/|$)(.*)
@@ -730,7 +730,7 @@ metadata:
 spec:
   ingressClassName: public
   rules:
-  - host: qimahdev-api.rega.gov.sa
+  - host: bcoretestapi.4explain.net
     http:
       paths:
       - path: /pmoagg(/|$)(.*)
@@ -751,7 +751,7 @@ metadata:
 spec:
   ingressClassName: public
   rules:
-  - host: qimahdev-api.rega.gov.sa
+  - host: bcoretestapi.4explain.net
     http:
       paths:
       - path: /taskmanagementrelease1(/|$)(.*)
@@ -772,7 +772,7 @@ metadata:
 spec:
   ingressClassName: public
   rules:
-  - host: qimahdev-api.rega.gov.sa
+  - host: bcoretestapi.4explain.net
     http:
       paths:
       - path: /taskmanagementagg(/|$)(.*)
@@ -793,7 +793,7 @@ metadata:
 spec:
   ingressClassName: public
   rules:
-  - host: qimahdev-api.rega.gov.sa
+  - host: bcoretestapi.4explain.net
     http:
       paths:
       - path: /taskmanagementv2(/|$)(.*)
@@ -816,7 +816,7 @@ metadata:
 spec:
   ingressClassName: public
   rules:
-  - host: qimahdev-api.rega.gov.sa
+  - host: bcoretestapi.4explain.net
     http:
       paths:
       - path: /events(/|$)(.*)
@@ -839,7 +839,7 @@ metadata:
 spec:
   ingressClassName: public
   rules:
-  - host: qimahdev-api.rega.gov.sa
+  - host: bcoretestapi.4explain.net
     http:
       paths:
       - path: /circulars(/|$)(.*)
@@ -861,10 +861,10 @@ spec:
   ingressClassName: public
   tls:
     - hosts:
-        - qimahdev-api.rega.gov.sa
+        - bcoretestapi.4explain.net
       secretName: rega-tls
   rules:
-  - host: qimahdev-api.rega.gov.sa
+  - host: bcoretestapi.4explain.net
     http:
       paths:
       - path: /visitor(/|$)(.*)
@@ -886,10 +886,10 @@ spec:
   ingressClassName: public
   tls:
     - hosts:
-        - qimahdev-api.rega.gov.sa
+        - bcoretestapi.4explain.net
       secretName: rega-tls
   rules:
-  - host: qimahdev-api.rega.gov.sa
+  - host: bcoretestapi.4explain.net
     http:
       paths:
       - path: /visitoragg(/|$)(.*)
@@ -911,10 +911,10 @@ spec:
   ingressClassName: public
   tls:
     - hosts:
-        - qimahdev-api.rega.gov.sa
+        - bcoretestapi.4explain.net
       secretName: rega-tls
   rules:
-  - host: qimahdev-api.rega.gov.sa
+  - host: bcoretestapi.4explain.net
     http:
       paths:
       - path: /dynamicapi(/|$)(.*)
@@ -936,10 +936,10 @@ spec:
   ingressClassName: public
   tls:
     - hosts:
-        - qimahdev-api.rega.gov.sa
+        - bcoretestapi.4explain.net
       secretName: rega-tls
   rules:
-  - host: qimahdev-api.rega.gov.sa
+  - host: bcoretestapi.4explain.net
     http:
       paths:
       - path: /strategymanagement(/|$)(.*)
@@ -961,10 +961,10 @@ spec:
   ingressClassName: public
   tls:
     - hosts:
-        - qimahdev-api.rega.gov.sa
+        - bcoretestapi.4explain.net
       secretName: rega-tls
   rules:
-  - host: qimahdev-api.rega.gov.sa
+  - host: bcoretestapi.4explain.net
     http:
       paths:
       - path: /strategymanagementaggregator(/|$)(.*)
@@ -986,10 +986,10 @@ spec:
   ingressClassName: public
   tls:
     - hosts:
-        - qimahdev-api.rega.gov.sa
+        - bcoretestapi.4explain.net
       secretName: rega-tls
   rules:
-  - host: qimahdev-api.rega.gov.sa
+  - host: bcoretestapi.4explain.net
     http:
       paths:
       - path: /training(/|$)(.*)
@@ -1011,10 +1011,10 @@ spec:
   ingressClassName: public
   tls:
     - hosts:
-        - qimahdev-api.rega.gov.sa
+        - bcoretestapi.4explain.net
       secretName: rega-tls
   rules:
-  - host: qimahdev-api.rega.gov.sa
+  - host: bcoretestapi.4explain.net
     http:
       paths:
       - path: /trainingagg(/|$)(.*)
@@ -1036,10 +1036,10 @@ spec:
   ingressClassName: public
   tls:
     - hosts:
-        - qimahdev-api.rega.gov.sa
+        - bcoretestapi.4explain.net
       secretName: rega-tls
   rules:
-  - host: qimahdev-api.rega.gov.sa
+  - host: bcoretestapi.4explain.net
     http:
       paths:
       - path: /legal(/|$)(.*)
@@ -1061,10 +1061,10 @@ spec:
   ingressClassName: public
   tls:
     - hosts:
-        - qimahdev-api.rega.gov.sa
+        - bcoretestapi.4explain.net
       secretName: rega-tls
   rules:
-  - host: qimahdev-api.rega.gov.sa
+  - host: bcoretestapi.4explain.net
     http:
       paths:
       - path: /legalagg(/|$)(.*)
@@ -1086,10 +1086,10 @@ spec:
   ingressClassName: public
   tls:
     - hosts:
-        - qimahdev-api.rega.gov.sa
+        - bcoretestapi.4explain.net
       secretName: rega-tls
   rules:
-  - host: qimahdev-api.rega.gov.sa
+  - host: bcoretestapi.4explain.net
     http:
       paths:
       - path: /strategictelecomagg(/|$)(.*)
@@ -1111,10 +1111,10 @@ spec:
   ingressClassName: public
   tls:
     - hosts:
-        - qimahdev-api.rega.gov.sa
+        - bcoretestapi.4explain.net
       secretName: rega-tls
   rules:
-  - host: qimahdev-api.rega.gov.sa
+  - host: bcoretestapi.4explain.net
     http:
       paths:
       - path: /strategictelecomloyalty(/|$)(.*)
@@ -1136,10 +1136,10 @@ spec:
   ingressClassName: public
   tls:
     - hosts:
-        - qimahdev-api.rega.gov.sa
+        - bcoretestapi.4explain.net
       secretName: rega-tls
   rules:
-  - host: qimahdev-api.rega.gov.sa
+  - host: bcoretestapi.4explain.net
     http:
       paths:
       - path: /strategictelecomthanks(/|$)(.*)
@@ -1161,10 +1161,10 @@ spec:
   ingressClassName: public
   tls:
     - hosts:
-        - qimahdev-api.rega.gov.sa
+        - bcoretestapi.4explain.net
       secretName: rega-tls
   rules:
-  - host: qimahdev-api.rega.gov.sa
+  - host: bcoretestapi.4explain.net
     http:
       paths:
       - path: /strategictelecomcongratulations(/|$)(.*)
@@ -1186,10 +1186,10 @@ spec:
   ingressClassName: public
   tls:
     - hosts:
-        - qimahdev-api.rega.gov.sa
+        - bcoretestapi.4explain.net
       secretName: rega-tls
   rules:
-  - host: qimahdev-api.rega.gov.sa
+  - host: bcoretestapi.4explain.net
     http:
       paths:
       - path: /strategictelecommedals(/|$)(.*)
@@ -1211,10 +1211,10 @@ spec:
   ingressClassName: public
   tls:
     - hosts:
-        - qimahdev-api.rega.gov.sa
+        - bcoretestapi.4explain.net
       secretName: rega-tls
   rules:
-  - host: qimahdev-api.rega.gov.sa
+  - host: bcoretestapi.4explain.net
     http:
       paths:
       - path: /risk(/|$)(.*)
@@ -1236,10 +1236,10 @@ spec:
   ingressClassName: public
   tls:
     - hosts:
-        - qimahdev-api.rega.gov.sa
+        - bcoretestapi.4explain.net
       secretName: rega-tls
   rules:
-  - host: qimahdev-api.rega.gov.sa
+  - host: bcoretestapi.4explain.net
     http:
       paths:
       - path: /riskagg(/|$)(.*)
