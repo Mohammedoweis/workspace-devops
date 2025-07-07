@@ -9,7 +9,7 @@ spec:
   revisionHistoryLimit: 2
   project: dev-project
   source:
-    repoURL: 'https://gitlab.rega.gov.sa/rega-softwares/workspace-devops.git'
+    repoURL: 'https://github.com/Mohammedoweis/workspace-devops.git'
     path: dev/manifest
     targetRevision: HEAD
   destination:
