@@ -1,24 +1,2251 @@
-apiVersion: argoproj.io/v1alpha1
-kind: Application
+
+apiVersion: apps/v1 
+kind: Deployment
 metadata:
-  namespace: argocd-apps
-  name: dev-workspace
-  finalizers:
-    - resources-finalizer.argocd.argoproj.io
+  name: 4ebusinesscore-frontend-deployment
+  namespace: dev-workspace
+  labels:
+    app: frontend
 spec:
-  revisionHistoryLimit: 2
-  project: dev-project
-  source:
-    repoURL: 'https://gitlab.rega.gov.sa/rega-softwares/workspace-devops.git'
-    path: dev/manifest
-    targetRevision: HEAD
-  destination:
-    # here we specify the namespace where the app should be deployed
-    namespace: dev-workspace
-    server: 'https://kubernetes.default.svc' 
-  syncPolicy:
-    automated:
-      prune: true
-      selfHeal: true
-    syncOptions:
-      - CreateNamespace=true
+  replicas: 1
+  selector:
+    matchLabels:
+      app: frontend
+  template:
+    metadata:
+      labels:
+        app: frontend
+    spec:
+      nodeSelector:
+          high-end: "true"
+      containers:
+      - name: 4ebusinesscore-frontend
+        image: 4edeploy/4ebusinesscore-qimah-main-dev:2.0.263
+        ports:
+        - name: default
+          containerPort: 3000
+      imagePullSecrets:
+      - name: regcred
+---
+apiVersion: apps/v1 
+kind: Deployment
+metadata:
+  name: 4ebusinesscore-frontend-legalmanagement-deployment
+  namespace: dev-workspace
+  labels:
+    app: frontend-legalmanagement
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: frontend-legalmanagement
+  template:
+    metadata:
+      labels:
+        app: frontend-legalmanagement
+    spec:
+      nodeSelector:
+          high-end: "true"
+      containers:
+      - name: 4ebusinesscore-frontend-legalmanagement
+        image: 4edeploy/4ebusinesscore-qimah-legalmanagement-dev:2.0.263
+        ports:
+        - name: default
+          containerPort: 3000
+      imagePullSecrets:
+      - name: regcred
+---
+apiVersion: apps/v1 
+kind: Deployment
+metadata:
+  name: 4ebusinesscore-frontend-riskmanagement-deployment
+  namespace: dev-workspace
+  labels:
+    app: frontend-riskmanagement
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: frontend-riskmanagement
+  template:
+    metadata:
+      labels:
+        app: frontend-riskmanagement
+    spec:
+      nodeSelector:
+          high-end: "true"
+      containers:
+      - name: 4ebusinesscore-frontend-riskmanagement
+        image: 4edeploy/4ebusinesscore-qimah-riskmanagement-dev:2.0.263
+        ports:
+        - name: default
+          containerPort: 3000
+      imagePullSecrets:
+      - name: regcred
+---
+apiVersion: apps/v1 
+kind: Deployment
+metadata:
+  name: 4ebusinesscore-frontend-strategiccommunication-deployment
+  namespace: dev-workspace
+  labels:
+    app: frontend-strategiccommunication
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: frontend-strategiccommunication
+  template:
+    metadata:
+      labels:
+        app: frontend-strategiccommunication
+    spec:
+      nodeSelector:
+          high-end: "true"
+      containers:
+      - name: 4ebusinesscore-frontend-strategiccommunication
+        image: 4edeploy/4ebusinesscore-qimah-strategiccommunication-dev:2.0.263
+        ports:
+        - name: default
+          containerPort: 3000
+      imagePullSecrets:
+      - name: regcred
+---      
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: 4ebusinesscore-usermanagement-deployment
+  namespace: dev-workspace
+  labels:
+    app: usermanagement
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: usermanagement
+  template:
+    metadata:
+      labels:
+        app: usermanagement
+    spec:
+      nodeSelector:
+          high-end: "true"
+      volumes:
+        - name: workspace-dev-serve-api-pv
+          persistentVolumeClaim:
+            claimName: workspace-dev-serve-api-pvc
+      containers:
+      - name: 4ebusinesscore-usermanagement
+        image: 4edeploy/4ebusinesscore-controlpanal-usermanagement:2.0.263
+        env:
+        - name: ConnectionStrings__DefaultConnection
+          value: "Data Source=10.21.10.144;Initial Catalog=4EPlatform.ControlPanel.UserManagement;User ID=SVC_SmartView;Password=SVC@123456;Max Pool Size=200;Integrated Security=false;MultipleActiveResultSets=True;TrustServerCertificate=True;"
+        - name: IdentityUrl
+          value: "http://usermanagement-service:5111/"
+        - name: GrpcServiceSettings__UserManagementUrl
+          value: "http://usermanagement-service:7152/"
+        - name: permesstionUrl
+          value: "http://usermanagement-service:5111/api/GetControllerAndActionName/AddPermession"
+        - name: key
+          value: "78"
+        ports:
+        - name: webapi
+          containerPort: 5111
+        - name: grpc        
+          containerPort: 7152
+        volumeMounts:
+          - mountPath: /app/publish/wwwroot
+            name: workspace-dev-serve-api-pv
+      imagePullSecrets:
+      - name: regcred
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: 4ebusinesscore-controlpanelagg-deployment
+  namespace: dev-workspace
+  labels:
+    app: controlpanelagg
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: controlpanelagg
+  template:
+    metadata:
+      labels:
+        app: controlpanelagg
+    spec:
+      nodeSelector:
+        high-end: "true"
+      volumes:
+        - name: workspace-dev-serve-api-pv
+          persistentVolumeClaim:
+            claimName: workspace-dev-serve-api-pvc
+      containers:
+      - name: 4ebusinesscore-controlpanelagg
+        image: 4edeploy/4ebusinesscore-controlpanel-aggregator:2.0.263
+        env:
+        - name: GrpcServiceSettings__OrgHierararchyUrl
+          value: "http://org-service:7286/"
+        - name: GrpcServiceSettings__UserManagementUrl
+          value: "http://usermanagement-service:7152/"
+        - name: GrpcServiceSettings__WorkSpaceUrl
+          value: "http://subsystemsetting-service:7110/"
+        - name: GrpcServiceSettings__PlatformSettingsUrl
+          value: "http://platformsetting-service:7297/"
+        - name: GrpcServiceSettings__OrgSettingsUrl
+          value: "http://10.21.10.144:7039/"
+        - name: GrpcServiceSettings__TicketingSystemAggregator
+          value: "http://ticketingagg-service:7243/"
+        - name: GrpcServiceSettings__NewsAggregator
+          value: "http://digitalagg-service:7346/"  
+        - name: IdentityUrl
+          value: "http://usermanagement-service:5111/"
+        - name: permesstionUrl
+          value: "http://usermanagement-service:5111/api/GetControllerAndActionName/AddPermession"
+        - name: key
+          value: "1000"
+        ports:
+        - name: webapi
+          containerPort: 5034
+        - name: grpc        
+          containerPort: 7067
+        volumeMounts:
+          - mountPath: /app/wwwroot
+            name: workspace-dev-serve-api-pv
+      imagePullSecrets:
+      - name: regcred
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: 4ebusinesscore-org-deployment
+  namespace: dev-workspace
+  labels:
+    app: org
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: org
+  template:
+    metadata:
+      labels:
+        app: org
+    spec:
+      nodeSelector:
+        high-end: "true"
+      volumes:
+        - mountPath: /app/wwwroot/
+          name: workspace-dev-serve-api-pv
+      containers:
+      - name: 4ebusinesscore-org
+        image: 4edeploy/4ebusinesscore-pontrolpanal-orghierararchy:2.0.263
+        env:
+        - name: ConnectionStrings__DefaultConnection
+          value: "Data Source=10.21.10.144;Initial Catalog=4EPlatform.ControlPanel.OrgHierarchy;User ID=SVC_SmartView;Password=SVC@123456;Integrated Security=false;MultipleActiveResultSets=True;TrustServerCertificate=True;"
+        - name: IdentityUrl
+          value: "http://usermanagement-service:5111/"
+        - name: GrpcServiceSettings__UserManagementUrl
+          value: "http://usermanagement-service:7152/"
+        - name: permesstionUrl
+          value: "http://usermanagement-service:5111/api/GetControllerAndActionName/AddPermession"
+        - name: key
+          value: "32"
+        ports:
+        - name: webapi
+          containerPort: 5041
+        - name: grpc        
+          containerPort: 7286
+        volumeMounts:
+          - mountPath: /app/wwwroot
+            name: workspace-dev-serve-api-pv
+      imagePullSecrets:
+      - name: regcred
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: 4ebusinesscore-platformsetting-deployment
+  namespace: dev-workspace
+  labels:
+    app: platformsetting
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: platformsetting
+  template:
+    metadata:
+      labels:
+        app: platformsetting
+    spec:
+      nodeSelector:
+        high-end: "true"
+      volumes:
+        - name: workspace-dev-serve-api-pv
+          persistentVolumeClaim:
+            claimName: workspace-dev-serve-api-pvc
+      containers:
+      - name: 4ebusinesscore-platformsetting
+        image: 4edeploy/4ebusinesscore-controlpanal-platformsettings:2.0.263
+        env:
+        - name: ConnectionStrings__DefaultConnection
+          value: "Data Source=10.21.10.144;Initial Catalog=4EPlatform.ControlPanel.SystemSetting;User ID=SVC_SmartView;Password=SVC@123456;Integrated Security=false;MultipleActiveResultSets=True;TrustServerCertificate=True;"
+        - name: IdentityUrl
+          value: "http://usermanagement-service:5111/"
+        - name: GrpcServiceSettings__UserManagementUrl
+          value: "http://usermanagement-service:7152/"
+        - name: permesstionUrl
+          value: "http://usermanagement-service:5111/api/GetControllerAndActionName/AddPermession"
+        - name: key
+          value: "37"
+        ports:
+        - name: webapi
+          containerPort: 5196
+        - name: grpc        
+          containerPort: 7297
+        volumeMounts:
+          - mountPath: /app/publish/wwwroot
+            name: workspace-dev-serve-api-pv
+      imagePullSecrets:
+      - name: regcred
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: 4ebusinesscore-subsystemsetting-deployment
+  namespace: dev-workspace
+  labels:
+    app: subsystemsetting
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: subsystemsetting
+  template:
+    metadata:
+      labels:
+        app: subsystemsetting
+    spec:
+      nodeSelector:
+        high-end: "true"
+      volumes:
+        - name: workspace-dev-serve-api-pv
+          persistentVolumeClaim:
+            claimName: workspace-dev-serve-api-pvc
+      containers:
+      - name: 4ebusinesscore-subsystemsetting
+        image: 4edeploy/4ebusinesscore-controlpanal-subsystemsettings:2.0.263
+        env:
+        - name: ConnectionStrings__DefaultConnection
+          value: "Data Source=10.21.10.144;Initial Catalog=4EPlatform.ControlPanel.WorkSpace;User ID=SVC_SmartView;Password=SVC@123456;Integrated Security=false;MultipleActiveResultSets=True;TrustServerCertificate=True;"
+        - name: IdentityUrl
+          value: "http://usermanagement-service:5111/"
+        - name: GrpcServiceSettings__UserManagementUrl
+          value: "http://usermanagement-service:7152/"
+        - name: permesstionUrl
+          value: "http://usermanagement-service:5111/api/GetControllerAndActionName/AddPermession"
+        - name: key
+          value: "250"
+        ports:
+        - name: webapi
+          containerPort: 5186
+        - name: grpc        
+          containerPort: 7110
+        volumeMounts:
+          - mountPath: /app/publish/wwwroot
+            name: workspace-dev-serve-api-pv
+      imagePullSecrets:
+      - name: regcred  
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: 4ebusinesscore-ticketingsla-deployment
+  namespace: dev-workspace
+  labels:
+    app: ticketingsla
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ticketingsla
+  template:
+    metadata:
+      labels:
+        app: ticketingsla
+    spec:
+      nodeSelector:
+        high-end: "true"
+      volumes:
+        - name: workspace-dev-serve-api-pv
+          persistentVolumeClaim:
+            claimName: workspace-dev-serve-api-pvc
+      containers:
+      - name: 4ebusinesscore-ticketingsla
+        image: 4edeploy/4ebusinesscore-ticketingsystem-sla:2.0.263
+        env:
+        - name: ConnectionStrings__DefaultConnection
+          value: "Data Source=10.21.10.144;Initial Catalog=4EPlatform.TicketingSystem.SLA;User ID=SVC_SmartView;Password=SVC@123456;Integrated Security=false;MultipleActiveResultSets=True;TrustServerCertificate=True;"
+        - name: IdentityUrl
+          value: "http://usermanagement-service:5111/"
+        - name: GrpcServiceSettings__UserManagementUrl
+          value: "http://usermanagement-service:7152/"
+        - name: permesstionUrl
+          value: "http://usermanagement-service:5111/api/GetControllerAndActionName/AddPermession"
+        - name: key
+          value: "27"
+        ports:
+        - name: webapi
+          containerPort: 5278
+        - name: grpc        
+          containerPort: 7221
+        volumeMounts:
+          - mountPath: /app/publish/wwwroot
+            name: workspace-dev-serve-api-pv
+      imagePullSecrets:
+      - name: regcred      
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: 4ebusinesscore-ticketingserviceops-deployment
+  namespace: dev-workspace
+  labels:
+    app: ticketingserviceops
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ticketingserviceops
+  template:
+    metadata:
+      labels:
+        app: ticketingserviceops
+    spec:
+      nodeSelector:
+        high-end: "true"
+      volumes:
+        - name: workspace-dev-serve-api-pv
+          persistentVolumeClaim:
+            claimName: workspace-dev-serve-api-pvc
+      containers:
+      - name: 4ebusinesscore-ticketingserviceops
+        image: 4edeploy/4beusinesscore-ticketingsystem-serviceoperations:2.0.263
+        env:
+        - name: ConnectionStrings__DefaultConnection
+          value: "Data Source=10.21.10.144;Initial Catalog=4EPlatform.TicketingSystem.ServiceOperations;User ID=SVC_SmartView;Password=SVC@123456;Integrated Security=false;MultipleActiveResultSets=True;TrustServerCertificate=True;"
+        - name: IdentityUrl
+          value: "http://usermanagement-service:5111/"
+        - name: GrpcServiceSettings__UserManagementUrl
+          value: "http://usermanagement-service:7152/"
+        - name: permesstionUrl
+          value: "http://usermanagement-service:5111/api/GetControllerAndActionName/AddPermession"
+        - name: key
+          value: "101"
+        ports:
+        - name: webapi
+          containerPort: 5218
+        - name: grpc        
+          containerPort: 7205
+        volumeMounts:
+          - mountPath: /app/wwwroot
+            name: workspace-dev-serve-api-pv
+      imagePullSecrets:
+      - name: regcred     
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: 4ebusinesscore-ticketingfaq-deployment
+  namespace: dev-workspace
+  labels:
+    app: ticketingfaq
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ticketingfaq
+  template:
+    metadata:
+      labels:
+        app: ticketingfaq
+    spec:
+      nodeSelector:
+        high-end: "true"
+      volumes:
+        - name: workspace-dev-serve-api-pv
+          persistentVolumeClaim:
+            claimName: workspace-dev-serve-api-pvc
+      containers:
+      - name: 4ebusinesscore-ticketingfaq
+        image: 4edeploy/4ebusinesscore-ticketingsystem-faq:2.0.263
+        env:
+        - name: ConnectionStrings__DefaultConnection
+          value: "Data Source=10.21.10.144;Initial Catalog=4EPlatform.TicketingSystem.FAQ;User ID=SVC_SmartView;Password=SVC@123456;Integrated Security=false;MultipleActiveResultSets=True;TrustServerCertificate=True;"
+        - name: IdentityUrl
+          value: "http://usermanagement-service:5111/"
+        - name: GrpcServiceSettings__UserManagementUrl
+          value: "http://usermanagement-service:7152/"
+        - name: permesstionUrl
+          value: "http://usermanagement-service:5111/api/GetControllerAndActionName/AddPermession"
+        - name: key
+          value: "30"
+        ports:
+        - name: webapi
+          containerPort: 5171
+        - name: grpc        
+          containerPort: 7229
+        volumeMounts:
+          - mountPath: /app/wwwroot
+            name: workspace-dev-serve-api-pv
+      imagePullSecrets:
+      - name: regcred
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: 4ebusinesscore-ticketingservicemanagement-deployment
+  namespace: dev-workspace
+  labels:
+    app: ticketingservicemanagement
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ticketingservicemanagement
+  template:
+    metadata:
+      labels:
+        app: ticketingservicemanagement
+    spec:
+      nodeSelector:
+        high-end: "true"
+      volumes:
+        - name: workspace-dev-serve-api-pv
+          persistentVolumeClaim:
+            claimName: workspace-dev-serve-api-pvc
+      containers:
+      - name: 4ebusinesscore-ticketingservicemanagement
+        image: 4edeploy/4ebusinesscore-ticketingsystem-servicemangement:2.0.263
+        env:
+        - name: ConnectionStrings__DefaultConnection
+          value: "Data Source=10.21.10.144;Initial Catalog=4EPlatform.TicketingSystem.ServiceManagement;User ID=SVC_SmartView;Password=SVC@123456;Integrated Security=false;MultipleActiveResultSets=True;TrustServerCertificate=True;"
+        - name: IdentityUrl
+          value: "http://usermanagement-service:5111/"
+        - name: GrpcServiceSettings__UserManagementUrl
+          value: "http://usermanagement-service:7152/"
+        - name: permesstionUrl
+          value: "http://usermanagement-service:5111/api/GetControllerAndActionName/AddPermession"
+        - name: key
+          value: "26"
+        ports:
+        - name: webapi
+          containerPort: 5217
+        - name: grpc        
+          containerPort: 7201
+        volumeMounts:
+          - mountPath: /app/publish/wwwroot
+            name: workspace-dev-serve-api-pv
+      imagePullSecrets:
+      - name: regcred
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: 4ebusinesscore-ticketingagg-deployment
+  namespace: dev-workspace
+  labels:
+    app: ticketingagg
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ticketingagg
+  template:
+    metadata:
+      labels:
+        app: ticketingagg
+    spec:
+      nodeSelector:
+        high-end: "true"
+      volumes:
+        - name: workspace-dev-serve-api-pv
+          persistentVolumeClaim:
+            claimName: workspace-dev-serve-api-pvc
+      containers:
+      - name: 4ebusinesscore-ticketingagg
+        image: 4edeploy/4ebusinesscore-ticketingsystem-aggregator:2.0.263
+        env:
+        - name: GrpcServiceSettings__ControlPanelAggUrl
+          value: "http://controlpanelagg-service:7067/"
+        - name: GrpcServiceSettings__TicketingSystemUrl
+          value: "http://ticketingservicemanagement-service:7201/"
+        - name: GrpcServiceSettings__SlaUrl
+          value: "http://ticketingsla-service:7221/"
+        - name: GrpcServiceSettings__ResolveUrl
+          value: "http://ticketingfaq-service:7229/"
+        - name: GrpcServiceSettings__ServiceOperations
+          value: "http://ticketingserviceops-service:7205/"
+        - name: GrpcServiceSettings__TicketingSystemOperationServicesUrl
+          value: "http://ticketingserviceops-service:7205/"
+        - name: GrpcServiceSettings__FAQ
+          value: "http://ticketingfaq-service:7229/"
+        - name: GrpcServiceSettings__DynamicWorkflow
+          value: "http://dynamicworkflow-service:7594/"
+        - name: IdentityUrl
+          value: "http://usermanagement-service:5111/"
+        - name: GrpcServiceSettings__UserManagementUrl
+          value: "http://usermanagement-service:7152/"
+        - name: GrpcServiceSettings__ORG
+          value: "http://org-service:7286/"
+        - name: permesstionUrl
+          value: "http://usermanagement-service:5111/api/GetControllerAndActionName/AddPermession"
+        - name: GrpcServiceSettings__workspace
+          value: "http://subsystemsetting-service:7110/"
+        - name: GrpcServiceSettings__Training
+          value: "http://training-service:7199/"
+        - name: GrpcServiceSettings__TrainingAgg
+          value: "http://training-aggregator-service:7233/"
+
+        - name: key
+          value: "1001"
+        ports:
+        - name: webapi
+          containerPort: 5050
+        - name: grpc        
+          containerPort: 7243
+        volumeMounts:
+          - mountPath: /app/wwwroot
+            name: workspace-dev-serve-api-pv
+      imagePullSecrets:
+      - name: regcred
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: 4ebusinesscore-dynamicworkflow-deployment
+  namespace: dev-workspace
+  labels:
+    app: dynamicworkflow
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: dynamicworkflow
+  template:
+    metadata:
+      labels:
+        app: dynamicworkflow
+    spec:
+      nodeSelector:
+        high-end: "true"
+      volumes:
+        - name: workspace-dev-serve-api-pv
+          persistentVolumeClaim:
+            claimName: workspace-dev-serve-api-pvc
+      containers:
+      - name: 4ebusinesscore-dynamicworkflow
+        image: 4edeploy/4ebusinesscore-dynamicworkflow-workflow:2.0.263
+        env:
+        - name: ConnectionStrings__DefaultConnection
+          value: "Data Source=10.21.10.144;Initial Catalog=4EPlatform.Workflow.DynamicWorkFlow;User ID=SVC_SmartView;Password=SVC@123456;Integrated Security=false;MultipleActiveResultSets=True;TrustServerCertificate=True;"
+        - name: GrpcServiceSettings__DynamicWorkFlowAggUrl
+          value: "http://dynamicworkflowagg-service:7244/"
+        - name: IdentityUrl
+          value: "http://usermanagement-service:5111/"
+        - name: GrpcServiceSettings__CommitteesUrl
+          value: "http://committee-service:7168/"
+        - name: GrpcServiceSettings__UserManagementUrl
+          value: "http://usermanagement-service:7152/"
+        - name: GrpcServiceSettings__PmoUrl
+          value: "http://pmo-service:7400/"
+        - name: GrpcServiceSettings__TrainingUrl
+          value: "http://training-service:7199/"
+        - name: permesstionUrl
+          value: "http://usermanagement-service:5111/api/GetControllerAndActionName/AddPermession"
+        - name: AppSettings__FileSettings
+          value: "{\"FileSettings\":{\"AllowedFileExtensions\":[\".jpg\",\".jpeg\",\".doc\",\".docx\",\".pdf\",\".png\",\".xlsx\",\".txt\"],\"allowedMimeTypes\":[\"image/jpeg\",\"image/png\",\"image/gif\",\"application/pdf\",\"application/vnd.openxmlformats-officedocument.wordprocessingml.document\",\"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet\",\"text/plain\"]}}"
+  
+        - name: key
+          value: "69"
+        ports:
+        - name: webapi
+          containerPort: 5594
+        - name: grpc        
+          containerPort: 7594
+        volumeMounts:
+          - mountPath: /app/publish/wwwroot
+            name: workspace-dev-serve-api-pv
+      imagePullSecrets:
+      - name: regcred
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: 4ebusinesscore-dynamicworkflowagg-deployment
+  namespace: dev-workspace
+  labels:
+    app: dynamicworkflowagg
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: dynamicworkflowagg
+  template:
+    metadata:
+      labels:
+        app: dynamicworkflowagg
+    spec:
+      nodeSelector:
+        high-end: "true"
+      volumes:
+        - name: workspace-dev-serve-api-pv
+          persistentVolumeClaim:
+            claimName: workspace-dev-serve-api-pvc
+      containers:
+      - name: 4ebusinesscore-dynamicworkflowagg
+        image: 4edeploy/4ebusinesscore-dynamicworkflow-aggregator:2.0.263
+        env:
+        - name: GrpcServiceSettings__TicketingSystemUrl
+          value: "http://ticketingservicemanagement-service:7201/"
+        - name: GrpcServiceSettings__ControlPanelAggUrl
+          value: "http://controlpanelagg-service:7067/"
+        - name: GrpcServiceSettings__SlaUrl
+          value: "http://ticketingsla-service:7221/"
+        - name: GrpcServiceSettings__ResolveUrl
+          value: "http://ticketingfaq-service:7229/"
+        - name: GrpcServiceSettings__ServiceOperations
+          value: "http://ticketingserviceops-service:7205/"
+        - name: GrpcServiceSettings__TicketingSystemOperationServicesUrl
+          value: "http://ticketingserviceops-service:7205/"
+        - name: GrpcServiceSettings__FAQ
+          value: "http://ticketingfaq-service:7229/"
+        - name: GrpcServiceSettings__DynamicWorkFlowUrl
+          value: "http://dynamicworkflow-service:7594/"
+        - name: GrpcServiceSettings__OrgUrl
+          value: "http://org-service:7286/"
+        - name: IdentityUrl
+          value: "http://usermanagement-service:5111/"
+        - name: GrpcServiceSettings__CommitteesUrl
+          value: "http://committee-service:7168/"
+        - name: GrpcServiceSettings__UserManagementUrl
+          value: "http://usermanagement-service:7152/"
+        - name: permesstionUrl
+          value: "http://usermanagement-service:5111/api/GetControllerAndActionName/AddPermession"
+        - name: GrpcServiceSettings__PmoUrl
+          value: "http://pmo-service:7400/" 
+        - name: GrpcServiceSettings__PmoaggUrl
+          value: "http://pmoagg-service:7401/"                   
+        - name: key
+          value: "69" 
+        ports:
+        - name: webapi
+          containerPort: 5051
+        - name: grpc        
+          containerPort: 7244
+        volumeMounts:
+          - mountPath: /app/wwwroot
+            name: workspace-dev-serve-api-pv
+      imagePullSecrets:
+      - name: regcred
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+ name: 4ebusinesscore-ideabank-deployment
+ namespace: dev-workspace
+ labels:
+   app: ideabank
+spec:
+ replicas: 1
+ selector:
+   matchLabels:
+     app: ideabank
+ template:
+   metadata:
+     labels:
+       app: ideabank
+   spec:
+     volumes:
+      - name: workspace-dev-serve-api-pv
+        persistentVolumeClaim:
+          claimName: workspace-dev-serve-api-pvc
+     containers:
+     - name: 4ebusinesscore-ideabank
+       image: 4edeploy/4ebusinesscore-knowledgemanagement-ideabank:2.0.263
+       env:
+       - name: ConnectionStrings__DefaultConnection
+         value: "Data Source=10.21.10.144;Initial Catalog=4EPlatform.KnowledgeManagement.IdeaBank;User ID=SVC_SmartView;Password=SVC@123456;Integrated Security=false;MultipleActiveResultSets=True;TrustServerCertificate=True;"
+       - name: IdentityUrl
+         value: "http://usermanagement-service:5111/"
+       - name: GrpcServiceSettings__UserManagementUrl
+         value: "http://usermanagement-service:7152/"
+       - name: permesstionUrl
+         value: "http://usermanagement-service:5111/api/GetControllerAndActionName/AddPermession"
+       - name: key
+         value: "95"
+       ports:
+       - name: webapi
+         containerPort: 5290
+       - name: grpc
+         containerPort: 7250
+       volumeMounts:
+        - mountPath: /app/publish/wwwroot
+          name: workspace-dev-serve-api-pv
+     imagePullSecrets:
+     - name: regcred
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: 4ebusinesscore-challenges-deployment
+  namespace: dev-workspace
+  labels:
+    app: challenges
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: challenges
+  template:
+    metadata:
+      labels:
+        app: challenges
+    spec:
+      nodeSelector:
+        high-end: "true"
+      volumes:
+        - name: workspace-dev-serve-api-pv
+          persistentVolumeClaim:
+            claimName: workspace-dev-serve-api-pvc
+      containers:
+      - name: 4ebusinesscore-challenges
+        image: 4edeploy/4ebusinesscore-knowledgemanagement-challenges:2.0.263
+        env:
+        - name: ConnectionStrings__DefaultConnection
+          value: "Data Source=10.21.10.144;Initial Catalog=4EPlatform.KnowledgeManagement.Challenges;User ID=SVC_SmartView;Password=SVC@123456;Integrated Security=false;MultipleActiveResultSets=True;TrustServerCertificate=True;"
+        - name: IdentityUrl
+          value: "http://usermanagement-service:5111/"
+        - name: GrpcServiceSettings__UserManagementUrl
+          value: "http://usermanagement-service:7152/"
+        - name: permesstionUrl
+          value: "http://usermanagement-service:5111/api/GetControllerAndActionName/AddPermession"
+        - name: key
+          value: "97"
+        ports:
+        - name: webapi
+          containerPort: 5202
+        - name: grpc        
+          containerPort: 7148
+        volumeMounts:
+          - mountPath: /app/publish/wwwroot
+            name: workspace-dev-serve-api-pv
+      imagePullSecrets:
+      - name: regcred
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: 4ebusinesscore-knowledge-deployment
+  namespace: dev-workspace
+  labels:
+    app: knowledge
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: knowledge
+  template:
+    metadata:
+      labels:
+        app: knowledge
+    spec:
+      nodeSelector:
+        high-end: "true"
+      volumes:
+        - name: workspace-dev-serve-api-pv
+          persistentVolumeClaim:
+            claimName: workspace-dev-serve-api-pvc
+      containers:
+      - name: 4ebusinesscore-knowledge
+        image: 4edeploy/4ebusinesscore-knowledgemanagement-knowledge:2.0.263
+        env:
+        - name: ConnectionStrings__DefaultConnection
+          value: "Data Source=10.21.10.144;Initial Catalog=4EPlatform.KnowledgeManagement.Knowledge;User ID=SVC_SmartView;Password=SVC@123456;Integrated Security=false;MultipleActiveResultSets=True;TrustServerCertificate=True;"
+        - name: IdentityUrl
+          value: "http://usermanagement-service:5111/"
+        - name: GrpcServiceSettings__UserManagementUrl
+          value: "http://usermanagement-service:7152/"
+        - name: permesstionUrl
+          value: "http://usermanagement-service:5111/api/GetControllerAndActionName/AddPermession"
+        - name: key
+          value: "98"
+        ports:
+        - name: webapi
+          containerPort: 5201
+        - name: grpc        
+          containerPort: 7147
+        volumeMounts:
+          - mountPath: /app/publish/wwwroot
+            name: workspace-dev-serve-api-pv
+      imagePullSecrets:
+      - name: regcred
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: 4ebusinesscore-blog-deployment
+  namespace: dev-workspace
+  labels:
+    app: blog
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: blog
+  template:
+    metadata:
+      labels:
+        app: blog
+    spec:
+      nodeSelector:
+        high-end: "true"
+      volumes:
+        - name: workspace-dev-serve-api-pv
+          persistentVolumeClaim:
+            claimName: workspace-dev-serve-api-pvc
+      containers:
+      - name: 4ebusinesscore-blog
+        image: 4edeploy/4ebusinesscore-knowledgemanagement-blog:2.0.263
+        env:
+        - name: ConnectionStrings__DefaultConnection
+          value: "Data Source=10.21.10.144;Initial Catalog=4EPlatform.KnowledgeManagement.Blog;User ID=SVC_SmartView;Password=SVC@123456;Integrated Security=false;MultipleActiveResultSets=True;TrustServerCertificate=True;"
+        - name: IdentityUrl
+          value: "http://usermanagement-service:5111/"
+        - name: GrpcServiceSettings__UserManagementUrl
+          value: "http://usermanagement-service:7152/"
+        - name: permesstionUrl
+          value: "http://usermanagement-service:5111/api/GetControllerAndActionName/AddPermession"
+        - name: key
+          value: "96"
+        ports:
+        - name: webapi
+          containerPort: 5334
+        - name: grpc        
+          containerPort: 7181
+        volumeMounts:
+          - mountPath: /app/publish/wwwroot
+            name: workspace-dev-serve-api-pv
+      imagePullSecrets:
+      - name: regcred
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: 4ebusinesscore-askexpert-deployment
+  namespace: dev-workspace
+  labels:
+    app: askexpert
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: askexpert
+  template:
+    metadata:
+      labels:
+        app: askexpert
+    spec:
+      nodeSelector:
+        high-end: "true"
+      volumes:
+        - name: workspace-dev-serve-api-pv
+          persistentVolumeClaim:
+            claimName: workspace-dev-serve-api-pvc
+      containers:
+      - name: 4ebusinesscore-askexpert
+        image: 4edeploy/4ebusinesscore-knowledgemanagement-askexpert:2.0.263
+        env:
+        - name: ConnectionStrings__DefaultConnection
+          value: "Data Source=10.21.10.144;Initial Catalog=4EPlatform.KnowledgeManagement.AskExpert;User ID=SVC_SmartView;Password=SVC@123456;Integrated Security=false;MultipleActiveResultSets=True;TrustServerCertificate=True;"
+        - name: IdentityUrl
+          value: "http://usermanagement-service:5111/"
+        - name: GrpcServiceSettings__UserManagementUrl
+          value: "http://usermanagement-service:7152/"
+        - name: permesstionUrl
+          value: "http://usermanagement-service:5111/api/GetControllerAndActionName/AddPermession"
+        - name: key
+          value: "92"
+        ports:
+        - name: webapi
+          containerPort: 5333
+        - name: grpc        
+          containerPort: 7180
+        volumeMounts:
+          - mountPath: /app/publish/wwwroot
+            name: workspace-dev-serve-api-pv
+      imagePullSecrets:
+      - name: regcred
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: 4ebusinesscore-knowledgeagg-deployment
+  namespace: dev-workspace
+  labels:
+    app: knowledgeagg
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: knowledgeagg
+  template:
+    metadata:
+      labels:
+        app: knowledgeagg
+    spec:
+      nodeSelector:
+        high-end: "true"
+      volumes:
+        - name: workspace-dev-serve-api-pv
+          persistentVolumeClaim:
+            claimName: workspace-dev-serve-api-pvc
+      containers:
+      - name: 4ebusinesscore-knowledgeagg
+        image: 4edeploy/4ebusinesscore-knowledgemanagement-aggregator:2.0.263
+        env:
+        - name: GrpcServiceSettings__KnowledgeManagementUrl
+          value: "http://knowledgeagg-service:7149/"
+        - name: GrpcServiceSettings__CPAggregatorUrl
+          value: "http://controlpanelagg-service:7067/"
+        - name: GrpcServiceSettings__ChallengesUrl
+          value: "http://challenges-service:7148/"
+        - name: GrpcServiceSettings__BlogUrl
+          value: "http://blog-service:7181/"          
+        - name: GrpcServiceSettings__KnowledgeUrl
+          value: "http://knowledge-service:7147/"
+        - name: GrpcServiceSettings__IdeaBankUrl
+          value: "http://ideabank-service:7250/"
+        - name: GrpcServiceSettings__AskExpertUrl
+          value: "http://askexpert-service:7180/"          
+        - name: GrpcServiceSettings__UserManagementUrl
+          value: "http://usermanagement-service:7152/"
+        - name: IdentityUrl
+          value: "http://usermanagement-service:5111/"
+        - name: permesstionUrl
+          value: "http://usermanagement-service:5111/api/GetControllerAndActionName/AddPermession"
+        - name: key
+          value: "10000000"
+        ports:
+        - name: webapi
+          containerPort: 5555
+        - name: grpc        
+          containerPort: 7149
+        volumeMounts:
+          - mountPath: /app/wwwroot
+            name: workspace-dev-serve-api-pv
+      imagePullSecrets:
+      - name: regcred
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: 4ebusinesscore-committee-deployment
+  namespace: dev-workspace
+  labels:
+    app: committee
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: committee
+  template:
+    metadata:
+      labels:
+        app: committee
+    spec:
+      nodeSelector:
+        high-end: "true"
+      volumes:
+        - name: workspace-dev-serve-api-pv
+          persistentVolumeClaim:
+            claimName: workspace-dev-serve-api-pvc
+      containers:
+      - name: 4ebusinesscore-committee
+        image: 4edeploy/4ebusinesscore-committee:2.0.263
+        env:
+        - name: ConnectionStrings__DefaultConnection
+          value: "Data Source=10.21.10.144;Initial Catalog=4EPlatform.CommitteeManagement.Committee;User ID=SVC_SmartView;Password=SVC@123456;Integrated Security=false;MultipleActiveResultSets=True;TrustServerCertificate=True;"
+        - name: IdentityUrl
+          value: "http://usermanagement-service:5111/"
+        - name: GrpcServiceSettings__UserManagmentUrl
+          value: "http://usermanagement-service:7152/"
+        - name: permesstionUrl
+          value: "http://usermanagement-service:5111/api/GetControllerAndActionName/AddPermession"
+        - name: key
+          value: "120"
+        ports:
+        - name: webapi
+          containerPort: 5222
+        - name: grpc        
+          containerPort: 7168
+        volumeMounts:
+          - mountPath: /app/publish/wwwroot
+            name: workspace-dev-serve-api-pv
+      imagePullSecrets:
+      - name: regcred
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: 4ebusinesscore-committeeagg-deployment
+  namespace: dev-workspace
+  labels:
+    app: committeeagg
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: committeeagg
+  template:
+    metadata:
+      labels:
+        app: committeeagg
+    spec:
+      nodeSelector:
+        high-end: "true"
+      volumes:
+        - name: workspace-dev-serve-api-pv
+          persistentVolumeClaim:
+            claimName: workspace-dev-serve-api-pvc
+      containers:
+      - name: 4ebusinesscore-committeeagg
+        image: 4edeploy/4ebusinesscore-committee-aggregator:2.0.263
+        env:
+        - name: ConnectionStrings__DefaultConnection
+          value: "Data Source=10.21.10.144;Initial Catalog=4EPlatform.CommitteeManagement.Committee;User ID=SVC_SmartView;Password=SVC@123456;Integrated Security=false;MultipleActiveResultSets=True;TrustServerCertificate=True;"
+        - name: IdentityUrl
+          value: "http://usermanagement-service:5111/"
+        - name: GrpcServiceSettings__CPAggregatorUrl
+          value: "http://controlpanelagg-service:7067/"
+        - name: GrpcServiceSettings__CommitteesUrl
+          value: "http://committee-service:7168/"
+        - name: GrpcServiceSettings__UserManagmentUrl
+          value: "http://usermanagement-service:7152/"
+        - name: GrpcServiceSettings__DynamicWorkflowAggregator
+          value: "http://dynamicworkflowagg-service:7244/"
+        - name: GrpcServiceSettings__DynamicWorkflow
+          value: "http://dynamicworkflow-service:7594/"
+        - name: permesstionUrl
+          value: "http://usermanagement-service:5111/api/GetControllerAndActionName/AddPermession"
+        - name: key
+          value: "120"
+        ports:
+        - name: webapi
+          containerPort: 5399
+        - name: grpc        
+          containerPort: 7350
+        volumeMounts:
+          - mountPath: /app/publish/wwwroot
+            name: workspace-dev-serve-api-pv
+      imagePullSecrets:
+      - name: regcred
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: 4ebusinesscore-orgdefination-deployment
+  namespace: dev-workspace
+  labels:
+    app: orgdefination
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: orgdefination
+  template:
+    metadata:
+      labels:
+        app: orgdefination
+    spec:
+      nodeSelector:
+        high-end: "true"
+      volumes:
+        - name: workspace-dev-serve-api-pv
+          persistentVolumeClaim:
+            claimName: workspace-dev-serve-api-pvc
+      containers:
+      - name: 4ebusinesscore-orgdefination
+        image: 4edeploy/4ebusinesscore-digitalmedia-orgdefination:2.0.263
+        env:
+        - name: ConnectionStrings__DefaultConnection
+          value: "Data Source=10.21.10.144;Initial Catalog=4EPlatform.DigitalMedia.AuthorityDefination;User ID=SVC_SmartView;Password=SVC@123456;Integrated Security=false;MultipleActiveResultSets=True;TrustServerCertificate=True;"
+        - name: IdentityUrl
+          value: "http://usermanagement-service:5111/"
+        - name: GrpcServiceSettings__UserManagementUrl
+          value: "http://usermanagement-service:7152/"
+        - name: permesstionUrl
+          value: "http://usermanagement-service:5111/api/GetControllerAndActionName/AddPermession"
+        - name: key
+          value: "46"
+        - name: FileSize
+          value: "500000"
+        ports:
+        - name: webapi
+          containerPort: 5300
+        - name: grpc        
+          containerPort: 7345
+        volumeMounts:
+          - mountPath: /app/publish/wwwroot
+            name: workspace-dev-serve-api-pv
+      imagePullSecrets:
+      - name: regcred
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: 4ebusinesscore-digitalagg-deployment
+  namespace: dev-workspace
+  labels:
+    app: digitalagg
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: digitalagg
+  template:
+    metadata:
+      labels:
+        app: digitalagg
+    spec:
+      nodeSelector:
+        high-end: "true"
+      volumes:
+        - name: workspace-dev-serve-api-pv
+          persistentVolumeClaim:
+            claimName: workspace-dev-serve-api-pvc
+      containers:
+      - name: 4ebusinesscore-digitalagg
+        image: 4edeploy/4ebusinesscore-digitalmedia-aggregator:2.0.263
+        env:
+        - name: GrpcServiceSettings__DigitalMediaUrl
+          value: "http://digitalnews-service:7245/"
+        - name: GrpcServiceSettings__CPAggregatorUrl
+          value: "http://controlpanelagg-service:7067/"
+        - name: GrpcServiceSettings__OrgDefinationUrl
+          value: "http://orgdefination-service:7345/"
+        - name: IdentityUrl
+          value: "http://usermanagement-service:5111/"
+        - name: GrpcServiceSettings__UserManagmentUrl
+          value: "http://usermanagement-service:7152/"
+        - name: permesstionUrl
+          value: "http://usermanagement-service:5111/api/GetControllerAndActionName/AddPermession"
+        - name: key
+          value: "151"
+        ports:
+        - name: webapi
+          containerPort: 5301
+        - name: grpc        
+          containerPort: 7346
+        volumeMounts:
+          - mountPath: /app/wwwroot
+            name: workspace-dev-serve-api-pv
+      imagePullSecrets:
+      - name: regcred
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: 4ebusinesscore-digitalnews-deployment
+  namespace: dev-workspace
+  labels:
+    app: digitalnews
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: digitalnews
+  template:
+    metadata:
+      labels:
+        app: digitalnews
+    spec:
+      nodeSelector:
+        high-end: "true"
+      volumes:
+        - name: workspace-dev-serve-api-pv
+          persistentVolumeClaim:
+            claimName: workspace-dev-serve-api-pvc
+      containers:
+      - name: 4ebusinesscore-digitalnews
+        image: 4edeploy/4ebusinesscore-digitalmedia-news:2.0.263
+        env:
+        - name: ConnectionStrings__DefaultConnection
+          value: "Data Source=10.21.10.144;Initial Catalog=4EPlatform_DigitalMedia_News;User ID=SVC_SmartView;Password=SVC@123456;Integrated Security=false;MultipleActiveResultSets=True;TrustServerCertificate=True;"
+        - name: IdentityUrl
+          value: "http://usermanagement-service:5111/"
+        - name: GrpcServiceSettings__UserManagementUrl
+          value: "http://usermanagement-service:7152/"
+        - name: permesstionUrl
+          value: "http://usermanagement-service:5111/api/GetControllerAndActionName/AddPermession"
+        - name: key
+          value: "44"
+        ports:
+        - name: webapi
+          containerPort: 5299
+        - name: grpc        
+          containerPort: 7245
+        volumeMounts:
+          - mountPath: /app/publish/wwwroot
+            name: workspace-dev-serve-api-pv
+      imagePullSecrets:
+      - name: regcred
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: 4ebusinesscore-notification-deployment
+  namespace: dev-workspace
+  labels:
+    app: notification
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: notification
+  template:
+    metadata:
+      labels:
+        app: notification
+    spec:
+      nodeSelector:
+        high-end: "true"
+      volumes:
+        - name: workspace-dev-serve-api-pv
+          persistentVolumeClaim:
+            claimName: workspace-dev-serve-api-pvc
+      containers:
+      - name: 4ebusinesscore-notification
+        image: 4edeploy/4ebusinesscore-notification-notification:2.0.263
+        env:
+        - name: ConnectionStrings__DefaultConnection
+          value: "Data Source=10.21.10.144;Initial Catalog=4EPlatform.Notification.NotificationSettings;User ID=SVC_SmartView;Password=SVC@123456;Integrated Security=false;MultipleActiveResultSets=True;TrustServerCertificate=True;"
+        - name: IdentityUrl
+          value: "http://usermanagement-service:5111/"
+        - name: GrpcServiceSettings__UserManagementUrl
+          value: "http://usermanagement-service:7152/"
+        - name: FromMail
+          value: "Qimah.noreply@rega.gov.sa"
+        - name: Password
+          value: "T94N7^1@zePo"
+        - name: Host
+          value: "mail.rega.gov.sa"
+        - name: Port
+          value: "587"
+        - name: UrlServer
+          value: "https://workspacefront.rega.gov.sa"
+        - name: permesstionUrl
+          value: "http://usermanagement-service:5111/api/GetControllerAndActionName/AddPermession"
+        - name: key
+          value: "90"  
+        - name: GrpcServiceSettings__WorkSpaceUrl
+          value: "http://subsystemsetting-service:7110/"
+        ports:
+        - name: webapi
+          containerPort: 5128
+        - name: grpc        
+          containerPort: 7188
+        volumeMounts:
+          - mountPath: /app/publish/wwwroot
+            name: workspace-dev-serve-api-pv
+      imagePullSecrets:
+      - name: regcred
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: 4ebusinesscore-notificationagg-deployment
+  namespace: dev-workspace
+  labels:
+    app: notificationagg
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: notificationagg
+  template:
+    metadata:
+      labels:
+        app: notificationagg
+    spec:
+      nodeSelector:
+        high-end: "true"
+      volumes:
+        - name: workspace-dev-serve-api-pv
+          persistentVolumeClaim:
+            claimName: workspace-dev-serve-api-pvc
+      containers:
+      - name: 4ebusinesscore-notificationagg
+        image: 4edeploy/4ebusinesscore-notification-aggregator:2.0.263
+        env:
+        - name: IdentityUrl
+          value: "http://usermanagement-service:5111/"
+        - name: GrpcServiceSettings__UserManagementUrl
+          value: "http://usermanagement-service:7152/"
+        - name: GrpcServiceSettings__ControlPanelAggUrl
+          value: "http://controlpanelagg-service:7067/"
+        - name: GrpcServiceSettings__NotificationUrl
+          value: "http://notification-service:7188/"
+        - name: GrpcServiceSettings__WorkSpaceUrl
+          value: "http://subsystemsetting-service:7110/"
+        - name: GrpcServiceSettings__SubsysystemUrl
+          value: "http://subsystemsetting-service:7110/"
+        - name: GrpcServiceSettings__TicketingAgg
+          value: "http://ticketingagg-service:7243/"
+        - name: permesstionUrl
+          value: "http://usermanagement-service:5111/api/GetControllerAndActionName/AddPermession"
+        - name: key
+          value: "99"
+        ports:
+        - name: webapi
+          containerPort: 5085
+        - name: grpc        
+          containerPort: 7009
+        volumeMounts:
+          - mountPath: /app/publish/wwwroot
+            name: workspace-dev-serve-api-pv
+      imagePullSecrets:
+      - name: regcred
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: 4ebusinesscore-events-deployment
+  namespace: dev-workspace
+  labels:
+    app: events
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: events
+  template:
+    metadata:
+      labels:
+        app: events
+    spec:
+      nodeSelector:
+        high-end: "true"
+      volumes:
+        - name: workspace-dev-serve-api-pv
+          persistentVolumeClaim:
+            claimName: workspace-dev-serve-api-pvc
+      containers:
+      - name: 4ebusinesscore-events
+        image: 4edeploy/4ebusinesscore-digitalmedia-events:2.0.263
+        env:
+        - name: IdentityUrl
+          value: "http://usermanagement-service:5111/"
+        - name: ConnectionStrings__DefaultConnection
+          value: "Data Source=10.21.10.144;Initial Catalog=4EPlatform.DigitalMedia.Events;User ID=SVC_SmartView;Password=SVC@123456;Integrated Security=false;MultipleActiveResultSets=True;TrustServerCertificate=True;"
+        - name: GrpcServiceSettings__UserManagementUrl
+          value: "http://usermanagement-service:7152/"
+        - name: permesstionUrl
+          value: "http://usermanagement-service:5111/api/GetControllerAndActionName/AddPermession"
+        - name: key
+          value: "50"
+        ports:
+        - name: webapi
+          containerPort: 5302
+        - name: grpc        
+          containerPort: 7347
+        volumeMounts:
+          - mountPath: /app/publish/wwwroot
+            name: workspace-dev-serve-api-pv
+      imagePullSecrets:
+      - name: regcred
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: 4ebusinesscore-circulars-deployment
+  namespace: dev-workspace
+  labels:
+    app: circulars
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: circulars
+  template:
+    metadata:
+      labels:
+        app: circulars
+    spec:
+      nodeSelector:
+        high-end: "true"
+      volumes:
+        - name: workspace-dev-serve-api-pv
+          persistentVolumeClaim:
+            claimName: workspace-dev-serve-api-pvc
+      containers:
+      - name: 4ebusinesscore-circulars
+        image: 4edeploy/4ebusinesscore-digitalmedia-circulars:2.0.263
+        env:
+        - name: IdentityUrl
+          value: "http://usermanagement-service:5111/"
+        - name: ConnectionStrings__DefaultConnection
+          value: "Data Source=10.21.10.144;Initial Catalog=4EPlatform.DigitalMedia.Circulars;User ID=SVC_SmartView;Password=SVC@123456;Integrated Security=false;MultipleActiveResultSets=True;TrustServerCertificate=True;"
+        - name: GrpcServiceSettings__UserManagementUrl
+          value: "http://usermanagement-service:7152/"
+        - name: GrpcServiceSettings__CPAggregatorUrl
+          value: "http://org-service:7286/"
+        - name: permesstionUrl
+          value: "http://usermanagement-service:5111/api/GetControllerAndActionName/AddPermession"
+        - name: CircularsUpload__allowedAttachmentExtensions__0
+          value: ".pdf"
+        - name: CircularsUpload__allowedAttachmentExtensions__1
+          value: ".jpg"
+        - name: CircularsUpload__allowedAttachmentExtensions__2
+          value: ".jpeg"
+        - name: CircularsUpload__allowedAttachmentExtensions__3
+          value: ".png"
+        - name: CircularsUpload__allowedImageExtensions__0
+          value: ".jpg"
+        - name: CircularsUpload__allowedImageExtensions__1
+          value: ".jpeg"
+        - name: CircularsUpload__allowedImageExtensions__2
+          value: ".png"
+        - name: CircularsUpload__allowedVideoExtensions__0
+          value: ".mp4"
+        - name: CircularsUpload__allowedVideoExtensions__1
+          value: ".webm"
+        - name: CircularsUpload__maxFileSizes__image
+          value: "5242880"
+        - name: CircularsUpload__maxFileSizes__video
+          value: "20971520"
+        - name: CircularsUpload__maxFileSizes__attachment
+          value: "10485760"          
+        ports:
+        - name: webapi
+          containerPort: 5303
+        - name: grpc        
+          containerPort: 7348
+        volumeMounts:
+          - mountPath: /app/publish/wwwroot
+            name: workspace-dev-serve-api-pv
+      imagePullSecrets:
+      - name: regcred
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: 4ebusinesscore-visitormanagement-deployment
+  namespace: dev-workspace
+  labels:
+    app: visitormanagement
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: visitormanagement
+  template:
+    metadata:
+      labels:
+        app: visitormanagement
+    spec:
+      nodeSelector:
+          high-end: "true"
+      volumes:
+        - name: workspace-dev-serve-api-pv
+          persistentVolumeClaim:
+            claimName: workspace-dev-serve-api-pvc
+      containers:
+      - name: 4ebusinesscore-visitormanagement
+        image: 4edeploy/4ebusinesscore-visitormanagement:2.0.263
+        env:
+        - name: ConnectionStrings__DefaultConnection
+          value: "Data Source=10.21.10.144;Initial Catalog=4EPlatform.VisitorManagement;User ID=SVC_SmartView;Password=SVC@123456;Integrated Security=false;MultipleActiveResultSets=True;TrustServerCertificate=True;"
+        - name: IdentityUrl
+          value: "http://usermanagement-service:5111/"
+        - name: GrpcServiceSettings__UserManagementUrl
+          value: "http://usermanagement-service:7152/"
+        - name: permesstionUrl
+          value: "http://usermanagement-service:5111/api/GetControllerAndActionName/AddPermession"
+        - name: FileSettings__AllowedFileExtensions__0
+          value: ".jpg"
+        - name: FileSettings__AllowedFileExtensions__1
+          value: ".jpeg"
+        - name: FileSettings__AllowedFileExtensions__2
+          value: ".doc"
+        - name: FileSettings__AllowedFileExtensions__3
+          value: ".docx"
+        - name: FileSettings__AllowedFileExtensions__4
+          value: ".pdf"
+        - name: FileSettings__AllowedFileExtensions__5
+          value: ".png"  
+        - name: key
+          value: "90"
+        ports:
+        - name: webapi
+          containerPort: 5549
+        - name: grpc        
+          containerPort: 7121
+        volumeMounts:
+          - mountPath: /app/publish/wwwroot
+            name: workspace-dev-serve-api-pv
+      imagePullSecrets:
+      - name: regcred
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: 4ebusinesscore-visitormanagementagg-deployment
+  namespace: dev-workspace
+  labels:
+    app: visitormanagementagg
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: visitormanagementagg
+  template:
+    metadata:
+      labels:
+        app: visitormanagementagg
+    spec:
+      nodeSelector:
+        high-end: "true"
+      volumes:
+        - name: workspace-dev-serve-api-pv
+          persistentVolumeClaim:
+            claimName: workspace-dev-serve-api-pvc
+      containers:
+      - name: 4ebusinesscore-visitormanagementagg
+        image: 4edeploy/4ebusinesscore-visitormanagement-aggregator:2.0.263
+        env:
+        - name: IdentityUrl
+          value: "http://usermanagement-service:5111/"
+        - name: GrpcServiceSettings__ControlPanelAggUrl
+          value: "http://org-service:7286/"
+        - name: GrpcServiceSettings__UserManagementUrl
+          value: "http://usermanagement-service:7152/"
+        - name: GrpcServiceSettings__VisitorManagement
+          value: "http://visitormanagement-service:7121/"
+        - name: FileSettings__AllowedFileExtensions__0
+          value: ".jpg"
+        - name: FileSettings__AllowedFileExtensions__1
+          value: ".jpeg"
+        - name: FileSettings__AllowedFileExtensions__2
+          value: ".doc"
+        - name: FileSettings__AllowedFileExtensions__3
+          value: ".docx"
+        - name: FileSettings__AllowedFileExtensions__4
+          value: ".pdf"
+        - name: FileSettings__AllowedFileExtensions__5
+          value: ".png"            
+        ports:
+        - name: webapi
+          containerPort: 5046
+        - name: grpc        
+          containerPort: 7173
+        volumeMounts:
+          - mountPath: /app/publish/wwwroot
+            name: workspace-dev-serve-api-pv
+      imagePullSecrets:
+      - name: regcred
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: 4ebusinesscore-training-deployment
+  namespace: dev-workspace
+  labels:
+    app: training
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: training
+  template:
+    metadata:
+      labels:
+        app: training
+    spec:
+      nodeSelector:
+          high-end: "true"
+      volumes:
+        - name: workspace-dev-serve-api-pv
+          persistentVolumeClaim:
+            claimName: workspace-dev-serve-api-pvc
+      containers:
+      - name: 4ebusinesscore-training
+        image: 4edeploy/4ebusinesscore-training:2.0.263
+        env:
+        - name: ConnectionStrings__DefaultConnection
+          value: "Data Source=10.21.10.144;Initial Catalog=4EPlatform.ControlPanel.Training;User ID=SVC_SmartView;Password=SVC@123456;Integrated Security=false;MultipleActiveResultSets=True;TrustServerCertificate=True;"
+        - name: IdentityUrl
+          value: "http://usermanagement-service:5111/"
+        - name: GrpcServiceSettings__UserManagementUrl
+          value: "http://usermanagement-service:7152/"
+        - name: GrpcServiceSettings__OrgUrl
+          value: "http://org-service:7286/"
+        - name: GrpcServiceSettings__DynamicWorkFlowUrl
+          value: "http://dynamicworkflow-service:7594/"
+        - name: GrpcServiceSettings__TicketingSystemUrl
+          value: "http://ticketingagg-service:7243/"
+        - name: permesstionUrl
+          value: "http://usermanagement-service:5111/api/GetControllerAndActionName/AddPermession"
+        ports:
+        - name: webapi
+          containerPort: 5191
+        - name: grpc        
+          containerPort: 7199
+        volumeMounts:
+          - mountPath: /app/publish/wwwroot
+            name: workspace-dev-serve-api-pv
+      imagePullSecrets:
+      - name: regcred
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: 4ebusinesscore-training-aggregator-deployment
+  namespace: dev-workspace
+  labels:
+    app: training-aggregator
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: training-aggregator
+  template:
+    metadata:
+      labels:
+        app: training-aggregator
+    spec:
+      nodeSelector:
+        high-end: "true"
+      volumes:
+        - name: workspace-dev-serve-api-pv
+          persistentVolumeClaim:
+            claimName: workspace-dev-serve-api-pvc
+      containers:
+      - name: 4ebusinesscore-training-aggregator
+        image: 4edeploy/4ebusinesscore-training-aggregator:2.0.263
+        env:
+        - name: IdentityUrl
+          value: "http://usermanagement-service:5111/"
+        - name: GrpcServiceSettings__ControlPanelAggUrl
+          value: "http://org-service:7286/"
+        - name: GrpcServiceSettings__UserManagmentUrl
+          value: "http://usermanagement-service:7152/"
+        - name: GrpcServiceSettings__TicketingSystemUrl
+          value: "http://ticketingservicemanagement-service:7201/"
+        - name: GrpcServiceSettings__SlaUrl
+          value: "http://ticketingsla-service:7221/"
+        - name: GrpcServiceSettings__ResolveUrl
+          value: "http://ticketingfaq-service:7229/"
+        - name: GrpcServiceSettings__ServiceOperations
+          value: "http://ticketingserviceops-service:7205/"
+        - name: GrpcServiceSettings__TicketingSystemOperationServicesUrl
+          value: "http://ticketingserviceops-service:7205/"
+        - name: GrpcServiceSettings__FAQ
+          value: "http://ticketingfaq-service:7229/"
+        - name: GrpcServiceSettings__DynamicWorkFlowUrl
+          value: "http://dynamicworkflow-service:7594/"
+        - name: GrpcServiceSettings__OrgUrl
+          value: "http://org-service:7286/"
+        - name: GrpcServiceSettings__Task
+          value: "http://57.129.28.126:7177/"
+        - name: GrpcServiceSettings__Training
+          value: "http://training-service:7199/"
+        ports:
+        - name: webapi
+          containerPort: 5349
+        - name: grpc        
+          containerPort: 7233
+        volumeMounts:
+          - mountPath: /app/publish/wwwroot
+            name: workspace-dev-serve-api-pv
+      imagePullSecrets:
+      - name: regcred
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: 4ebusinesscore-legalmanagement-deployment
+  namespace: dev-workspace
+  labels:
+    app: legalmanagement
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: legalmanagement
+  template:
+    metadata:
+      labels:
+        app: legalmanagement
+    spec:
+      nodeSelector:
+          high-end: "true"
+      volumes:
+        - name: workspace-dev-serve-api-pv
+          persistentVolumeClaim:
+            claimName: workspace-dev-serve-api-pvc
+      containers:
+      - name: 4ebusinesscore-legalmanagement
+        image: 4edeploy/4ebusinesscore-legalmanagement:2.0.263
+        env:
+        - name: ConnectionStrings__DefaultConnection
+          value: "Data Source=10.21.10.144;Initial Catalog=4EPlatform.ControlPanel.legalmanagement;User ID=SVC_SmartView;Password=SVC@123456;Integrated Security=false;MultipleActiveResultSets=True;TrustServerCertificate=True;"
+        - name: IdentityUrl
+          value: "http://usermanagement-service:5111/"
+        - name: permesstionUrl
+          value: "http://usermanagement-service:5111/api/GetControllerAndActionName/AddPermession"
+        - name: GrpcServiceSettings__UserManagmentUrl
+          value: "http://usermanagement-service:7152/"  
+        - name: RateLimit__PermitLimit
+          value: "5"
+        - name: RateLimit__QueueLimit
+          value: "5"
+        - name: RateLimit__WindowSeconds
+          value: "10"              
+        ports:
+        - name: webapi
+          containerPort: 5154
+        - name: grpc        
+          containerPort: 7165
+        volumeMounts:
+          - mountPath: /app/publish/wwwroot
+            name: workspace-dev-serve-api-pv
+      imagePullSecrets:
+      - name: regcred
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: 4ebusinesscore-legalmanagement-aggregator-deployment
+  namespace: dev-workspace
+  labels:
+    app: legalmanagement-aggregator
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: legalmanagement-aggregator
+  template:
+    metadata:
+      labels:
+        app: legalmanagement-aggregator
+    spec:
+      nodeSelector:
+        high-end: "true"
+      volumes:
+        - name: workspace-dev-serve-api-pv
+          persistentVolumeClaim:
+            claimName: workspace-dev-serve-api-pvc
+      containers:
+      - name: 4ebusinesscore-legalmanagement-aggregator
+        image: 4edeploy/4ebusinesscore-legalmanagement-aggregator:2.0.263
+        env:
+        - name: IdentityUrl
+          value: "http://usermanagement-service:5111/"
+        - name: GrpcServiceSettings__ControlPanelAggUrl
+          value: "http://org-service:7286/"
+        - name: GrpcServiceSettings__UserManagmentUrl
+          value: "http://usermanagement-service:7152/"
+        - name: GrpcServiceSettings__Legal
+          value: "http://legal-service:7165/"
+        - name: RateLimit__PermitLimit
+          value: "5"
+        - name: RateLimit__QueueLimit
+          value: "5"
+        - name: RateLimit__WindowSeconds
+          value: "10"             
+        ports:
+        - name: webapi
+          containerPort: 5134
+        - name: grpc        
+          containerPort: 7290
+        volumeMounts:
+          - mountPath: /app/publish/wwwroot
+            name: workspace-dev-serve-api-pv
+      imagePullSecrets:
+      - name: regcred
+---      
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: 4ebusinesscore-strategictelecom-aggregator-deployment
+  namespace: dev-workspace
+  labels:
+    app: strategictelecom-aggregator
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: strategictelecom-aggregator
+  template:
+    metadata:
+      labels:
+        app: strategictelecom-aggregator
+    spec:
+      nodeSelector:
+        high-end: "true"
+      volumes:
+        - name: workspace-dev-serve-api-pv
+          persistentVolumeClaim:
+            claimName: workspace-dev-serve-api-pvc
+      containers:
+      - name: 4ebusinesscore-strategictelecom-aggregator
+        image: 4edeploy/4ebusinesscore-strategictelecom-aggregator:2.0.263
+        env:
+        - name: IdentityUrl
+          value: "http://usermanagement-service:5111/"
+        - name: GrpcServiceSettings__ControlPanelAggUrl
+          value: "http://org-service:7286/"
+        - name: GrpcServiceSettings__UserManagmentUrl
+          value: "http://usermanagement-service:7152/"
+        - name: GrpcServiceSettings__OrgUrl
+          value: "http://org-service:7286/"
+        - name: GrpcServiceSettings__Medal
+          value: "http://medal-service:7139/"
+        - name: GrpcServiceSettings__Congratulations
+          value: "http://congratulations-service:7235/"
+        - name: GrpcServiceSettings__Thanks
+          value: "http://thanks-service:7138/"
+        - name: RateLimit__PermitLimit
+          value: "5"
+        - name: RateLimit__QueueLimit
+          value: "5"
+        - name: RateLimit__WindowSeconds
+          value: "10"  
+        ports:
+        - name: webapi
+          containerPort: 5024
+        - name: grpc        
+          containerPort: 7288
+        volumeMounts:
+          - mountPath: /app/publish/wwwroot
+            name: workspace-dev-serve-api-pv
+      imagePullSecrets:
+      - name: regcred
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: 4ebusinesscore-strategictelecomloyalty-deployment
+  namespace: dev-workspace
+  labels:
+    app: strategictelecomloyalty
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: strategictelecomloyalty
+  template:
+    metadata:
+      labels:
+        app: strategictelecomloyalty
+    spec:
+      nodeSelector:
+          high-end: "true"
+      volumes:
+        - name: workspace-dev-serve-api-pv
+          persistentVolumeClaim:
+            claimName: workspace-dev-serve-api-pvc
+      containers:
+      - name: 4ebusinesscore-strategictelecomloyalty
+        image: 4edeploy/4ebusinesscore-strategictelecom-loyalty:2.0.263
+        env:
+        - name: ConnectionStrings__DefaultConnection
+          value: "Data Source=10.21.10.144;Initial Catalog=4EPlatform.ControlPanel.strategictelecomloyalty;User ID=SVC_SmartView;Password=SVC@123456;Integrated Security=false;MultipleActiveResultSets=True;TrustServerCertificate=True;"
+        - name: IdentityUrl
+          value: "http://usermanagement-service:5111/"
+        - name: permesstionUrl
+          value: "http://usermanagement-service:5111/api/GetControllerAndActionName/AddPermession" 
+        - name: GrpcServiceSettings__UserManagmentUrl
+          value: "http://usermanagement-service:7152/"           
+        - name: RateLimit__PermitLimit
+          value: "5"
+        - name: RateLimit__QueueLimit
+          value: "5"
+        - name: RateLimit__WindowSeconds
+          value: "10" 
+        ports:
+        - name: webapi
+          containerPort: 5138
+        - name: grpc        
+          containerPort: 7256
+        volumeMounts:
+          - mountPath: /app/publish/wwwroot
+            name: workspace-dev-serve-api-pv
+      imagePullSecrets:
+      - name: regcred
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: 4ebusinesscore-strategictelecomthanks-deployment
+  namespace: dev-workspace
+  labels:
+    app: strategictelecomthanks
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: strategictelecomthanks
+  template:
+    metadata:
+      labels:
+        app: strategictelecomthanks
+    spec:
+      nodeSelector:
+          high-end: "true"
+      volumes:
+        - name: workspace-dev-serve-api-pv
+          persistentVolumeClaim:
+            claimName: workspace-dev-serve-api-pvc
+      containers:
+      - name: 4ebusinesscore-strategictelecomthanks
+        image: 4edeploy/4ebusinesscore-strategictelecom-thanks:2.0.263
+        env:
+        - name: ConnectionStrings__DefaultConnection
+          value: "Data Source=10.21.10.144;Initial Catalog=4EPlatform.ControlPanel.strategictelecomthanks;User ID=SVC_SmartView;Password=SVC@123456;Integrated Security=false;MultipleActiveResultSets=True;TrustServerCertificate=True;"
+        - name: IdentityUrl
+          value: "http://usermanagement-service:5111/"
+        - name: permesstionUrl
+          value: "http://usermanagement-service:5111/api/GetControllerAndActionName/AddPermession" 
+        - name: GrpcServiceSettings__UserManagmentUrl
+          value: "http://usermanagement-service:7152/"           
+        - name: RateLimit__PermitLimit
+          value: "5"
+        - name: RateLimit__QueueLimit
+          value: "5"
+        - name: RateLimit__WindowSeconds
+          value: "10" 
+        ports:
+        - name: webapi
+          containerPort: 5288
+        - name: grpc        
+          containerPort: 7138
+        volumeMounts:
+          - mountPath: /app/publish/wwwroot
+            name: workspace-dev-serve-api-pv
+      imagePullSecrets:
+      - name: regcred
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: 4ebusinesscore-strategictelecomcongratulations-deployment
+  namespace: dev-workspace
+  labels:
+    app: strategictelecomcongratulations
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: strategictelecomcongratulations
+  template:
+    metadata:
+      labels:
+        app: strategictelecomcongratulations
+    spec:
+      nodeSelector:
+          high-end: "true"
+      volumes:
+        - name: workspace-dev-serve-api-pv
+          persistentVolumeClaim:
+            claimName: workspace-dev-serve-api-pvc
+      containers:
+      - name: 4ebusinesscore-strategictelecomcongratulations
+        image: 4edeploy/4ebusinesscore-strategictelecom-congratulations:2.0.263
+        env:
+        - name: ConnectionStrings__DefaultConnection
+          value: "Data Source=10.21.10.144;Initial Catalog=4EPlatform.ControlPanel.strategictelecomcongratulations;User ID=SVC_SmartView;Password=SVC@123456;Integrated Security=false;MultipleActiveResultSets=True;TrustServerCertificate=True;"
+        - name: IdentityUrl
+          value: "http://usermanagement-service:5111/"
+        - name: permesstionUrl
+          value: "http://usermanagement-service:5111/api/GetControllerAndActionName/AddPermession" 
+        - name: GrpcServiceSettings__UserManagmentUrl
+          value: "http://usermanagement-service:7152/"           
+        - name: RateLimit__PermitLimit
+          value: "5"
+        - name: RateLimit__QueueLimit
+          value: "5"
+        - name: RateLimit__WindowSeconds
+          value: "10" 
+        ports:
+        - name: webapi
+          containerPort: 5245
+        - name: grpc        
+          containerPort: 7235
+        volumeMounts:
+          - mountPath: /app/publish/wwwroot
+            name: workspace-dev-serve-api-pv
+      imagePullSecrets:
+      - name: regcred
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: 4ebusinesscore-strategictelecommedals-deployment
+  namespace: dev-workspace
+  labels:
+    app: strategictelecommedals
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: strategictelecommedals
+  template:
+    metadata:
+      labels:
+        app: strategictelecommedals
+    spec:
+      nodeSelector:
+          high-end: "true"
+      volumes:
+        - name: workspace-dev-serve-api-pv
+          persistentVolumeClaim:
+            claimName: workspace-dev-serve-api-pvc
+      containers:
+      - name: 4ebusinesscore-strategictelecommedals
+        image: 4edeploy/4ebusinesscore-strategictelecom-medals:2.0.263
+        env:
+        - name: ConnectionStrings__DefaultConnection
+          value: "Data Source=10.21.10.144;Initial Catalog=4EPlatform.ControlPanel.strategictelecommedals;User ID=SVC_SmartView;Password=SVC@123456;Integrated Security=false;MultipleActiveResultSets=True;TrustServerCertificate=True;"
+        - name: IdentityUrl
+          value: "http://usermanagement-service:5111/"
+        - name: permesstionUrl
+          value: "http://usermanagement-service:5111/api/GetControllerAndActionName/AddPermession" 
+        - name: GrpcServiceSettings__UserManagmentUrl
+          value: "http://usermanagement-service:7152/"           
+        - name: RateLimit__PermitLimit
+          value: "5"
+        - name: RateLimit__QueueLimit
+          value: "5"
+        - name: RateLimit__WindowSeconds
+          value: "10" 
+        ports:
+        - name: webapi
+          containerPort: 5289
+        - name: grpc        
+          containerPort: 7139
+        volumeMounts:
+          - mountPath: /app/publish/wwwroot
+            name: workspace-dev-serve-api-pv
+      imagePullSecrets:
+      - name: regcred
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: 4ebusinesscore-riskmanagement-deployment
+  namespace: dev-workspace
+  labels:
+    app: riskmanagement
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: riskmanagement
+  template:
+    metadata:
+      labels:
+        app: riskmanagement
+    spec:
+      nodeSelector:
+          high-end: "true"
+      volumes:
+        - name: workspace-dev-serve-api-pv
+          persistentVolumeClaim:
+            claimName: workspace-dev-serve-api-pvc
+      containers:
+      - name: 4ebusinesscore-riskmanagement
+        image: 4edeploy/4ebusinesscore-riskmanagement:2.0.263
+        env:
+        - name: ConnectionStrings__DefaultConnection
+          value: "Data Source=10.21.10.144;Initial Catalog=4EPlatform.ControlPanel.riskmanagement;User ID=SVC_SmartView;Password=SVC@123456;Integrated Security=false;MultipleActiveResultSets=True;TrustServerCertificate=True;"
+        - name: IdentityUrl
+          value: "http://usermanagement-service:5111/"
+        - name: permesstionUrl
+          value: "http://usermanagement-service:5111/api/GetControllerAndActionName/AddPermession" 
+        - name: GrpcServiceSettings__UserManagmentUrl
+          value: "http://usermanagement-service:7152/"           
+        - name: RateLimit__PermitLimit
+          value: "5"
+        - name: RateLimit__QueueLimit
+          value: "5"
+        - name: RateLimit__WindowSeconds
+          value: "10" 
+        ports:
+        - name: webapi
+          containerPort: 5039
+        - name: grpc        
+          containerPort: 7299
+        volumeMounts:
+          - mountPath: /app/publish/wwwroot
+            name: workspace-dev-serve-api-pv
+      imagePullSecrets:
+      - name: regcred 
+---      
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: 4ebusinesscore-riskmanagement-aggregator-deployment
+  namespace: dev-workspace
+  labels:
+    app: riskmanagement-aggregator
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: riskmanagement-aggregator
+  template:
+    metadata:
+      labels:
+        app: riskmanagement-aggregator
+    spec:
+      nodeSelector:
+        high-end: "true"
+      volumes:
+        - name: workspace-dev-serve-api-pv
+          persistentVolumeClaim:
+            claimName: workspace-dev-serve-api-pvc
+      containers:
+      - name: 4ebusinesscore-riskmanagement-aggregator
+        image: 4edeploy/4ebusinesscore-riskmanagement-aggregator:2.0.263
+        env:
+        - name: IdentityUrl
+          value: "http://usermanagement-service:5111/"
+        - name: GrpcServiceSettings__ControlPanelAggUrl
+          value: "http://org-service:7286/"
+        - name: GrpcServiceSettings__UserManagmentUrl
+          value: "http://usermanagement-service:7152/"
+        - name: GrpcServiceSettings__OrgUrl
+          value: "http://org-service:7286/"
+        - name: GrpcServiceSettings__Riskmanagement
+          value: "http://riskmanagement-service:7299/"
+        - name: RateLimit__PermitLimit
+          value: "5"
+        - name: RateLimit__QueueLimit
+          value: "5"
+        - name: RateLimit__WindowSeconds
+          value: "10"  
+        ports:
+        - name: webapi
+          containerPort: 5106
+        - name: grpc        
+          containerPort: 7003
+        volumeMounts:
+          - mountPath: /app/publish/wwwroot
+            name: workspace-dev-serve-api-pv
+      imagePullSecrets:
+      - name: regcred
