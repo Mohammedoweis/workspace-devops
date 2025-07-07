@@ -1,0 +1,30 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: workspace-dev-serve-api-pv
+  namespace: dev-workspace
+spec:
+  capacity:
+    storage: 100Gi  # Adjust the size as needed
+  accessModes:
+    - ReadWriteMany
+  storageClassName: nfs-serve-api
+  nfs:
+    server: 10.21.11.54
+    path: "/NFSDATA/dev-qimah.rega.gov.sa"
+
+---
+
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: workspace-dev-serve-api-pvc
+  namespace: dev-workspace
+spec:
+  accessModes:
+    - ReadWriteMany
+  storageClassName: nfs-serve-api
+  resources:
+    requests:
+      storage: 100Gi  # Adjust to match the size specified in the PV
+

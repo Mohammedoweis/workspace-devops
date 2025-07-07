@@ -1,0 +1,1251 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: frontend-ingress
+  namespace: dev-workspace
+spec:
+  ingressClassName: public
+  tls:
+    - hosts:
+        - dev-qimah.rega.gov.sa
+      secretName: rega-tls
+  rules:
+    - host: dev-qimah.rega.gov.sa
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: frontend-service
+                port:
+                  number: 3000
+          - path: /legalmanagement
+            pathType: Prefix
+            backend:
+              service:
+                name: frontend-legalmanagement-service
+                port:
+                  number: 3000
+          - path: /riskmanagement
+            pathType: Prefix
+            backend:
+              service:
+                name: frontend-riskmanagement-service
+                port:
+                  number: 3000
+          - path: /strategiccommunication
+            pathType: Prefix
+            backend:
+              service:
+                name: frontend-strategiccommunication-service
+                port:
+                  number: 3000        
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: usermanagement-ingress
+  namespace: dev-workspace
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+spec:
+  ingressClassName: public
+  tls:
+    - hosts:
+        - qimahdev-api.rega.gov.sa
+      secretName: rega-tls
+  rules:
+  - host: qimahdev-api.rega.gov.sa
+    http:
+      paths:
+      - path: /usermanagement(/|$)(.*)
+        pathType: Prefix
+        backend:
+          service:
+            name: usermanagement-service
+            port:
+              number: 5111
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: usermanagementgrpc-ingress
+  namespace: dev-workspace
+  annotations:
+    nginx.ingress.kubernetes.io/backend-protocol: "GRPC"
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+spec:
+  ingressClassName: public
+  rules:
+  - host: qimahdev-api.rega.gov.sa
+    http:
+      paths:
+      - path: /usermanagementgrpc(/|$)(.*)
+        pathType: Prefix
+        backend:
+          service:
+            name: usermanagement-service
+            port:
+              number: 7152
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: controlpanelagg-ingress
+  namespace: dev-workspace
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+spec:
+  ingressClassName: public
+  tls:
+    - hosts:
+        - qimahdev-api.rega.gov.sa
+      secretName: rega-tls
+  rules:
+  - host: qimahdev-api.rega.gov.sa
+    http:
+      paths:
+      - path: /controlpanelagg(/|$)(.*)
+        pathType: Prefix
+        backend:
+          service:
+            name: controlpanelagg-service
+            port:
+              number: 5034
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: org-ingress
+  namespace: dev-workspace
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+spec:
+  ingressClassName: public
+  tls:
+    - hosts:
+        - qimahdev-api.rega.gov.sa
+      secretName: rega-tls
+  rules:
+  - host: qimahdev-api.rega.gov.sa
+    http:
+      paths:
+      - path: /org(/|$)(.*)
+        pathType: Prefix
+        backend:
+          service:
+            name: org-service
+            port:
+              number: 5041
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: orggrpc-ingress
+  namespace: dev-workspace
+  annotations:
+    nginx.ingress.kubernetes.io/backend-protocol: "GRPC"
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+spec:
+  ingressClassName: public
+  rules:
+  - host: qimahdev-api.rega.gov.sa
+    http:
+      paths:
+      - path: /orggrpc(/|$)(.*)
+        pathType: Prefix
+        backend:
+          service:
+            name: org-service
+            port:
+              number: 7286
+
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: platformsetting-ingress
+  namespace: dev-workspace
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+    nginx.ingress.kubernetes.io/proxy-body-size: "500m"
+    ingress.kubernetes.io/proxy-body-size: "500m"
+spec:
+  ingressClassName: public
+  tls:
+    - hosts:
+        - qimahdev-api.rega.gov.sa
+      secretName: rega-tls
+  rules:
+  - host: qimahdev-api.rega.gov.sa
+    http:
+      paths:
+      - path: /platformsetting(/|$)(.*)
+        pathType: Prefix
+        backend:
+          service:
+            name: platformsetting-service
+            port:
+              number: 5196
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: subsystemsetting-ingress
+  namespace: dev-workspace
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+spec:
+  ingressClassName: public
+  tls:
+    - hosts:
+        - qimahdev-api.rega.gov.sa
+      secretName: rega-tls
+  rules:
+  - host: qimahdev-api.rega.gov.sa
+    http:
+      paths:
+      - path: /subsystemsetting(/|$)(.*)
+        pathType: Prefix
+        backend:
+          service:
+            name: subsystemsetting-service
+            port:
+              number: 5186
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ticketingsla-ingress
+  namespace: dev-workspace
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+spec:
+  ingressClassName: public
+  rules:
+  - host: qimahdev-api.rega.gov.sa
+    http:
+      paths:
+      - path: /ticketingsla(/|$)(.*)
+        pathType: Prefix
+        backend:
+          service:
+            name: ticketingsla-service
+            port:
+              number: 5278
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ticketingserviceops-ingress
+  namespace: dev-workspace
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+spec:
+  ingressClassName: public
+  tls:
+    - hosts:
+        - qimahdev-api.rega.gov.sa
+      secretName: rega-tls
+  rules:
+  - host: qimahdev-api.rega.gov.sa
+    http:
+      paths:
+      - path: /ticketingserviceops(/|$)(.*)
+        pathType: Prefix
+        backend:
+          service:
+            name: ticketingserviceops-service
+            port:
+              number: 5218
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ticketingfaq-ingress
+  namespace: dev-workspace
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+spec:
+  ingressClassName: public
+  tls:
+    - hosts:
+        - qimahdev-api.rega.gov.sa
+      secretName: rega-tls
+  rules:
+  - host: qimahdev-api.rega.gov.sa
+    http:
+      paths:
+      - path: /ticketingfaq(/|$)(.*)
+        pathType: Prefix
+        backend:
+          service:
+            name: ticketingfaq-service
+            port:
+              number: 5171
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ticketingservicemanagement-ingress
+  namespace: dev-workspace
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+spec:
+  ingressClassName: public
+  rules:
+  - host: qimahdev-api.rega.gov.sa
+    http:
+      paths:
+      - path: /ticketingservicemanagement(/|$)(.*)
+        pathType: Prefix
+        backend:
+          service:
+            name: ticketingservicemanagement-service
+            port:
+              number: 5217
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ticketingagg-ingress
+  namespace: dev-workspace
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+spec:
+  ingressClassName: public
+  rules:
+  - host: qimahdev-api.rega.gov.sa
+    http:
+      paths:
+      - path: /ticketingagg(/|$)(.*)
+        pathType: Prefix
+        backend:
+          service:
+            name: ticketingagg-service
+            port:
+              number: 5050
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: dynamicworkflow-ingress
+  namespace: dev-workspace
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+spec:
+  ingressClassName: public
+  tls:
+    - hosts:
+        - qimahdev-api.rega.gov.sa
+      secretName: rega-tls
+  rules:
+  - host: qimahdev-api.rega.gov.sa
+    http:
+      paths:
+      - path: /dynamicworkflow(/|$)(.*)
+        pathType: Prefix
+        backend:
+          service:
+            name: dynamicworkflow-service
+            port:
+              number: 5594
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: dynamicworkflowgrpc-ingress
+  namespace: dev-workspace
+  annotations:
+    nginx.ingress.kubernetes.io/backend-protocol: "GRPC"
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+spec:
+  ingressClassName: public
+  tls:
+    - hosts:
+        - qimahdev-api.rega.gov.sa
+      secretName: rega-tls
+  rules:
+  - host: qimahdev-api.rega.gov.sa
+    http:
+      paths:
+      - path: /dynamicworkflowgrpc(/|$)(.*)
+        pathType: Prefix
+        backend:
+          service:
+            name: dynamicworkflow-service
+            port:
+              number: 7594
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: dynamicworkflowagg-ingress
+  namespace: dev-workspace
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+spec:
+  ingressClassName: public
+  tls:
+    - hosts:
+        - qimahdev-api.rega.gov.sa
+      secretName: rega-tls
+  rules:
+  - host: qimahdev-api.rega.gov.sa
+    http:
+      paths:
+      - path: /dynamicworkflowagg(/|$)(.*)
+        pathType: Prefix
+        backend:
+          service:
+            name: dynamicworkflowagg-service
+            port:
+              number: 5051
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ideabank-ingress
+  namespace: dev-workspace
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+    nginx.ingress.kubernetes.io/proxy-body-size: "500m"
+    ingress.kubernetes.io/proxy-body-size: "500m"
+
+spec:
+  ingressClassName: public
+  rules:
+  - host: qimahdev-api.rega.gov.sa
+    http:
+      paths:
+      - path: /ideabank(/|$)(.*)
+        pathType: Prefix
+        backend:
+          service:
+            name: ideabank-service
+            port:
+              number: 5290
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: challenges-ingress
+  namespace: dev-workspace
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+    nginx.ingress.kubernetes.io/proxy-body-size: "500m"
+    ingress.kubernetes.io/proxy-body-size: "500m"
+spec:
+  ingressClassName: public
+  rules:
+  - host: qimahdev-api.rega.gov.sa
+    http:
+      paths:
+      - path: /challenges(/|$)(.*)
+        pathType: Prefix
+        backend:
+          service:
+            name: challenges-service
+            port:
+              number: 5202
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: knowledge-ingress
+  namespace: dev-workspace
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+    nginx.ingress.kubernetes.io/proxy-body-size: "500m"
+    ingress.kubernetes.io/proxy-body-size: "500m"
+spec:
+  ingressClassName: public
+  rules:
+  - host: qimahdev-api.rega.gov.sa
+    http:
+      paths:
+      - path: /knowledge(/|$)(.*)
+        pathType: Prefix
+        backend:
+          service:
+            name: knowledge-service
+            port:
+              number: 5201
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: blog-ingress
+  namespace: dev-workspace
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+    nginx.ingress.kubernetes.io/proxy-body-size: "500m"
+    ingress.kubernetes.io/proxy-body-size: "500m"
+spec:
+  ingressClassName: public
+  rules:
+  - host: qimahdev-api.rega.gov.sa
+    http:
+      paths:
+      - path: /blog(/|$)(.*)
+        pathType: Prefix
+        backend:
+          service:
+            name: blog-service
+            port:
+              number: 5334
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: askexpert-ingress
+  namespace: dev-workspace
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+spec:
+  ingressClassName: public
+  rules:
+  - host: qimahdev-api.rega.gov.sa
+    http:
+      paths:
+      - path: /askexpert(/|$)(.*)
+        pathType: Prefix
+        backend:
+          service:
+            name: askexpert-service
+            port:
+              number: 5333
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: knowledgeagg-ingress
+  namespace: dev-workspace
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+spec:
+  ingressClassName: public
+  rules:
+  - host: qimahdev-api.rega.gov.sa
+    http:
+      paths:
+      - path: /knowledgeagg(/|$)(.*)
+        pathType: Prefix
+        backend:
+          service:
+            name: knowledgeagg-service
+            port:
+              number: 5555
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: committee-ingress
+  namespace: dev-workspace
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+    nginx.ingress.kubernetes.io/proxy-body-size: "500m"
+    ingress.kubernetes.io/proxy-body-size: "500m"
+spec:
+  ingressClassName: public
+  rules:
+  - host: qimahdev-api.rega.gov.sa
+    http:
+      paths:
+      - path: /committee(/|$)(.*)
+        pathType: Prefix
+        backend:
+          service:
+            name: committee-service
+            port:
+              number: 5222
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: committeeagg-ingress
+  namespace: dev-workspace
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+spec:
+  ingressClassName: public
+  rules:
+  - host: qimahdev-api.rega.gov.sa
+    http:
+      paths:
+      - path: /committeeagg(/|$)(.*)
+        pathType: Prefix
+        backend:
+          service:
+            name: committeeagg-service
+            port:
+              number: 5399
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: orgdefination-ingress
+  namespace: dev-workspace
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+    nginx.ingress.kubernetes.io/proxy-body-size: "500m"
+    ingress.kubernetes.io/proxy-body-size: "500m"
+spec:
+  ingressClassName: public
+  rules:
+  - host: qimahdev-api.rega.gov.sa
+    http:
+      paths:
+      - path: /orgdefination(/|$)(.*)
+        pathType: Prefix
+        backend:
+          service:
+            name: orgdefination-service
+            port:
+              number: 5300
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: digitalagg-ingress
+  namespace: dev-workspace
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+spec:
+  ingressClassName: public
+  tls:
+    - hosts:
+        - qimahdev-api.rega.gov.sa
+      secretName: rega-tls
+  rules:
+  - host: qimahdev-api.rega.gov.sa
+    http:
+      paths:
+      - path: /digitalagg(/|$)(.*)
+        pathType: Prefix
+        backend:
+          service:
+            name: digitalagg-service
+            port:
+              number: 5301
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: digitalnews-ingress
+  namespace: dev-workspace
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+    nginx.ingress.kubernetes.io/proxy-body-size: "500m"
+    ingress.kubernetes.io/proxy-body-size: "500m"
+spec:
+  ingressClassName: public
+  tls:
+    - hosts:
+        - qimahdev-api.rega.gov.sa
+      secretName: rega-tls
+  rules:
+  - host: qimahdev-api.rega.gov.sa
+    http:
+      paths:
+      - path: /digitalnews(/|$)(.*)
+        pathType: Prefix
+        backend:
+          service:
+            name: digitalnews-service
+            port:
+              number: 5299
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: notification-ingress
+  namespace: dev-workspace
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+spec:
+  ingressClassName: public
+  rules:
+  - host: qimahdev-api.rega.gov.sa
+    http:
+      paths:
+      - path: /notification(/|$)(.*)
+        pathType: Prefix
+        backend:
+          service:
+            name: notification-service
+            port:
+              number: 5128
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: notificationagg-ingress
+  namespace: dev-workspace
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+spec:
+  ingressClassName: public
+  rules:
+  - host: qimahdev-api.rega.gov.sa
+    http:
+      paths:
+      - path: /notificationagg(/|$)(.*)
+        pathType: Prefix
+        backend:
+          service:
+            name: notificationagg-service
+            port:
+              number: 5085
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: pmo-ingress
+  namespace: dev-workspace
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+spec:
+  ingressClassName: public
+  rules:
+  - host: qimahdev-api.rega.gov.sa
+    http:
+      paths:
+      - path: /pmo(/|$)(.*)
+        pathType: Prefix
+        backend:
+          service:
+            name: pmo-service
+            port:
+              number: 5400
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: pmoagg-ingress
+  namespace: dev-workspace
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+spec:
+  ingressClassName: public
+  rules:
+  - host: qimahdev-api.rega.gov.sa
+    http:
+      paths:
+      - path: /pmoagg(/|$)(.*)
+        pathType: Prefix
+        backend:
+          service:
+            name: pmoagg-service
+            port:
+              number: 5401
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: taskmanagementrelease1-ingress
+  namespace: dev-workspace
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+spec:
+  ingressClassName: public
+  rules:
+  - host: qimahdev-api.rega.gov.sa
+    http:
+      paths:
+      - path: /taskmanagementrelease1(/|$)(.*)
+        pathType: Prefix
+        backend:
+          service:
+            name: taskmanagementrelease1-service
+            port:
+              number: 5600
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: taskmanagementagg-ingress
+  namespace: dev-workspace
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+spec:
+  ingressClassName: public
+  rules:
+  - host: qimahdev-api.rega.gov.sa
+    http:
+      paths:
+      - path: /taskmanagementagg(/|$)(.*)
+        pathType: Prefix
+        backend:
+          service:
+            name: taskmanagementagg-service
+            port:
+              number: 5602
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: taskmanagementv2-ingress
+  namespace: dev-workspace
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+spec:
+  ingressClassName: public
+  rules:
+  - host: qimahdev-api.rega.gov.sa
+    http:
+      paths:
+      - path: /taskmanagementv2(/|$)(.*)
+        pathType: Prefix
+        backend:
+          service:
+            name: taskmanagementv2-service
+            port:
+              number: 5601
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: events-ingress
+  namespace: dev-workspace
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+    nginx.ingress.kubernetes.io/proxy-body-size: "500m"
+    ingress.kubernetes.io/proxy-body-size: "500m"
+spec:
+  ingressClassName: public
+  rules:
+  - host: qimahdev-api.rega.gov.sa
+    http:
+      paths:
+      - path: /events(/|$)(.*)
+        pathType: Prefix
+        backend:
+          service:
+            name: events-service
+            port:
+              number: 5302
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: circulars-ingress
+  namespace: dev-workspace
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+    nginx.ingress.kubernetes.io/proxy-body-size: "500m"
+    ingress.kubernetes.io/proxy-body-size: "500m"
+spec:
+  ingressClassName: public
+  rules:
+  - host: qimahdev-api.rega.gov.sa
+    http:
+      paths:
+      - path: /circulars(/|$)(.*)
+        pathType: Prefix
+        backend:
+          service:
+            name: circulars-service
+            port:
+              number: 5303
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: visitormanagement-ingress
+  namespace: dev-workspace
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+spec:
+  ingressClassName: public
+  tls:
+    - hosts:
+        - qimahdev-api.rega.gov.sa
+      secretName: rega-tls
+  rules:
+  - host: qimahdev-api.rega.gov.sa
+    http:
+      paths:
+      - path: /visitor(/|$)(.*)
+        pathType: Prefix
+        backend:
+          service:
+            name: visitormanagement-service
+            port:
+              number: 5149
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: visitormanagementagg-ingress
+  namespace: dev-workspace
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+spec:
+  ingressClassName: public
+  tls:
+    - hosts:
+        - qimahdev-api.rega.gov.sa
+      secretName: rega-tls
+  rules:
+  - host: qimahdev-api.rega.gov.sa
+    http:
+      paths:
+      - path: /visitoragg(/|$)(.*)
+        pathType: Prefix
+        backend:
+          service:
+            name: visitormanagementagg-service
+            port:
+              number: 5046
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: dynamicapi-ingress
+  namespace: dev-workspace
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+spec:
+  ingressClassName: public
+  tls:
+    - hosts:
+        - qimahdev-api.rega.gov.sa
+      secretName: rega-tls
+  rules:
+  - host: qimahdev-api.rega.gov.sa
+    http:
+      paths:
+      - path: /dynamicapi(/|$)(.*)
+        pathType: Prefix
+        backend:
+          service:
+            name: dynamicapi-service
+            port:
+              number: 5249
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: strategymanagement-ingress
+  namespace: dev-workspace
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+spec:
+  ingressClassName: public
+  tls:
+    - hosts:
+        - qimahdev-api.rega.gov.sa
+      secretName: rega-tls
+  rules:
+  - host: qimahdev-api.rega.gov.sa
+    http:
+      paths:
+      - path: /strategymanagement(/|$)(.*)
+        pathType: Prefix
+        backend:
+          service:
+            name: strategymanagement-service
+            port:
+              number: 5275
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: strategymanagementaggregator-ingress
+  namespace: dev-workspace
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+spec:
+  ingressClassName: public
+  tls:
+    - hosts:
+        - qimahdev-api.rega.gov.sa
+      secretName: rega-tls
+  rules:
+  - host: qimahdev-api.rega.gov.sa
+    http:
+      paths:
+      - path: /strategymanagementaggregator(/|$)(.*)
+        pathType: Prefix
+        backend:
+          service:
+            name: strategymanagementaggregator-service
+            port:
+              number: 5550
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: training-ingress
+  namespace: dev-workspace
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+spec:
+  ingressClassName: public
+  tls:
+    - hosts:
+        - qimahdev-api.rega.gov.sa
+      secretName: rega-tls
+  rules:
+  - host: qimahdev-api.rega.gov.sa
+    http:
+      paths:
+      - path: /training(/|$)(.*)
+        pathType: Prefix
+        backend:
+          service:
+            name: training-service
+            port:
+              number: 5191
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: training-aggregator-ingress
+  namespace: dev-workspace
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+spec:
+  ingressClassName: public
+  tls:
+    - hosts:
+        - qimahdev-api.rega.gov.sa
+      secretName: rega-tls
+  rules:
+  - host: qimahdev-api.rega.gov.sa
+    http:
+      paths:
+      - path: /trainingagg(/|$)(.*)
+        pathType: Prefix
+        backend:
+          service:
+            name: training-aggregator-service
+            port:
+              number: 5349
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: legalmanagement-ingress
+  namespace: dev-workspace
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+spec:
+  ingressClassName: public
+  tls:
+    - hosts:
+        - qimahdev-api.rega.gov.sa
+      secretName: rega-tls
+  rules:
+  - host: qimahdev-api.rega.gov.sa
+    http:
+      paths:
+      - path: /legal(/|$)(.*)
+        pathType: Prefix
+        backend:
+          service:
+            name: legalmanagement-service
+            port:
+              number: 5154
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: legalmanagement-aggregator-ingress
+  namespace: dev-workspace
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+spec:
+  ingressClassName: public
+  tls:
+    - hosts:
+        - qimahdev-api.rega.gov.sa
+      secretName: rega-tls
+  rules:
+  - host: qimahdev-api.rega.gov.sa
+    http:
+      paths:
+      - path: /legalagg(/|$)(.*)
+        pathType: Prefix
+        backend:
+          service:
+            name: legalmanagement-aggregator-service
+            port:
+              number: 5134
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: strategictelecom-aggregator-ingress
+  namespace: dev-workspace
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+spec:
+  ingressClassName: public
+  tls:
+    - hosts:
+        - qimahdev-api.rega.gov.sa
+      secretName: rega-tls
+  rules:
+  - host: qimahdev-api.rega.gov.sa
+    http:
+      paths:
+      - path: /strategictelecomagg(/|$)(.*)
+        pathType: Prefix
+        backend:
+          service:
+            name: strategictelecom-aggregator-service
+            port:
+              number: 5024
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: strategictelecomloyalty-ingress
+  namespace: dev-workspace
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+spec:
+  ingressClassName: public
+  tls:
+    - hosts:
+        - qimahdev-api.rega.gov.sa
+      secretName: rega-tls
+  rules:
+  - host: qimahdev-api.rega.gov.sa
+    http:
+      paths:
+      - path: /strategictelecomloyalty(/|$)(.*)
+        pathType: Prefix
+        backend:
+          service:
+            name: strategictelecomloyalty-service
+            port:
+              number: 5138
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: strategictelecomthanks-ingress
+  namespace: dev-workspace
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+spec:
+  ingressClassName: public
+  tls:
+    - hosts:
+        - qimahdev-api.rega.gov.sa
+      secretName: rega-tls
+  rules:
+  - host: qimahdev-api.rega.gov.sa
+    http:
+      paths:
+      - path: /strategictelecomthanks(/|$)(.*)
+        pathType: Prefix
+        backend:
+          service:
+            name: strategictelecomthanks-service
+            port:
+              number: 5288
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: strategictelecomcongratulations-ingress
+  namespace: dev-workspace
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+spec:
+  ingressClassName: public
+  tls:
+    - hosts:
+        - qimahdev-api.rega.gov.sa
+      secretName: rega-tls
+  rules:
+  - host: qimahdev-api.rega.gov.sa
+    http:
+      paths:
+      - path: /strategictelecomcongratulations(/|$)(.*)
+        pathType: Prefix
+        backend:
+          service:
+            name: strategictelecomcongratulations-service
+            port:
+              number: 5245
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: strategictelecommedals-ingress
+  namespace: dev-workspace
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+spec:
+  ingressClassName: public
+  tls:
+    - hosts:
+        - qimahdev-api.rega.gov.sa
+      secretName: rega-tls
+  rules:
+  - host: qimahdev-api.rega.gov.sa
+    http:
+      paths:
+      - path: /strategictelecommedals(/|$)(.*)
+        pathType: Prefix
+        backend:
+          service:
+            name: strategictelecommedals-service
+            port:
+              number: 5289
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: riskmanagement-ingress
+  namespace: dev-workspace
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+spec:
+  ingressClassName: public
+  tls:
+    - hosts:
+        - qimahdev-api.rega.gov.sa
+      secretName: rega-tls
+  rules:
+  - host: qimahdev-api.rega.gov.sa
+    http:
+      paths:
+      - path: /risk(/|$)(.*)
+        pathType: Prefix
+        backend:
+          service:
+            name: riskmanagement-service
+            port:
+              number: 5039
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: riskmanagement-aggregator-ingress
+  namespace: dev-workspace
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+spec:
+  ingressClassName: public
+  tls:
+    - hosts:
+        - qimahdev-api.rega.gov.sa
+      secretName: rega-tls
+  rules:
+  - host: qimahdev-api.rega.gov.sa
+    http:
+      paths:
+      - path: /riskagg(/|$)(.*)
+        pathType: Prefix
+        backend:
+          service:
+            name: riskmanagement-aggregator-service
+            port:
+              number: 5106

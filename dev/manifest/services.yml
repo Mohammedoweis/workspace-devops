@@ -1,0 +1,821 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend-service
+  namespace: dev-workspace
+spec:
+  selector:
+    app: frontend
+  ports:
+    - name: webapi
+      port: 3000
+      targetPort: 3000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend-legalmanagement-service
+  namespace: dev-workspace
+spec:
+  selector:
+    app: frontend-legalmanagement
+  ports:
+    - name: webapi
+      port: 3000
+      targetPort: 3000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend-riskmanagement-service
+  namespace: dev-workspace
+spec:
+  selector:
+    app: frontend-riskmanagement
+  ports:
+    - name: webapi
+      port: 3000
+      targetPort: 3000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend-strategiccommunication-service
+  namespace: dev-workspace
+spec:
+  selector:
+    app: frontend-strategiccommunication
+  ports:
+    - name: webapi
+      port: 3000
+      targetPort: 3000             
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: usermanagement-service
+  namespace: dev-workspace
+spec:
+  selector:
+    app: usermanagement
+  ports:
+    - name: webapi
+      port: 5111
+      targetPort: 5111
+    - name: grpc
+      port: 7152
+      targetPort: 7152
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: controlpanelagg-service
+  namespace: dev-workspace
+spec:
+  selector:
+    app: controlpanelagg
+  ports:
+    - name: webapi
+      port: 5034
+      targetPort: 5034
+    - name: grpc
+      port: 7067
+      targetPort: 7067
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: org-service
+  namespace: dev-workspace
+spec:
+  selector:
+    app: org
+  ports:
+    - name: webapi
+      port: 5041
+      targetPort: 5041
+    - name: grpc
+      port: 7286
+      targetPort: 7286
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: platformsetting-service
+  namespace: dev-workspace
+spec:
+  selector:
+    app: platformsetting
+  ports:
+    - name: webapi
+      port: 5196
+      targetPort: 5196
+    - name: grpc
+      port: 7297
+      targetPort: 7297
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: subsystemsetting-service
+  namespace: dev-workspace
+spec:
+  selector:
+    app: subsystemsetting
+  ports:
+    - name: webapi
+      port: 5186
+      targetPort: 5186
+    - name: grpc
+      port: 7110
+      targetPort: 7110
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ticketingsla-service
+  namespace: dev-workspace
+spec:
+  selector:
+    app: ticketingsla
+  ports:
+    - name: webapi
+      port: 5278
+      targetPort: 5278
+    - name: grpc
+      port: 7221
+      targetPort: 7221
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ticketingserviceops-service
+  namespace: dev-workspace
+spec:
+  selector:
+    app: ticketingserviceops
+  ports:
+    - name: webapi
+      port: 5218
+      targetPort: 5218
+    - name: grpc
+      port: 7205
+      targetPort: 7205
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ticketingfaq-service
+  namespace: dev-workspace
+spec:
+  selector:
+    app: ticketingfaq
+  ports:
+    - name: webapi
+      port: 5171
+      targetPort: 5171
+    - name: grpc
+      port: 7229
+      targetPort: 7229
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ticketingservicemanagement-service
+  namespace: dev-workspace
+spec:
+  selector:
+    app: ticketingservicemanagement
+  ports:
+    - name: webapi
+      port: 5217
+      targetPort: 5217
+    - name: grpc
+      port: 7201
+      targetPort: 7201
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ticketingagg-service
+  namespace: dev-workspace
+spec:
+  selector:
+    app: ticketingagg
+  ports:
+    - name: webapi
+      port: 5050
+      targetPort: 5050
+    - name: grpc
+      port: 7243
+      targetPort: 7243
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: dynamicworkflow-service
+  namespace: dev-workspace
+spec:
+  selector:
+    app: dynamicworkflow
+  ports:
+    - name: webapi
+      port: 5594
+      targetPort: 5594
+    - name: grpc
+      port: 7594
+      targetPort: 7594
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: dynamicworkflowagg-service
+  namespace: dev-workspace
+spec:
+  selector:
+    app: dynamicworkflowagg
+  ports:
+    - name: webapi
+      port: 5051
+      targetPort: 5051
+    - name: grpc
+      port: 7244
+      targetPort: 7244
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ideabank-service
+  namespace: dev-workspace
+spec:
+  selector:
+    app: ideabank
+  ports:
+    - name: webapi
+      port: 5290
+      targetPort: 5290
+    - name: grpc
+      port: 7250
+      targetPort: 7250
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: challenges-service
+  namespace: dev-workspace
+spec:
+  selector:
+    app: challenges
+  ports:
+    - name: webapi
+      port: 5202
+      targetPort: 5202
+    - name: grpc
+      port: 7148
+      targetPort: 7148
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: knowledge-service
+  namespace: dev-workspace
+spec:
+  selector:
+    app: knowledge
+  ports:
+    - name: webapi
+      port: 5201
+      targetPort: 5201
+    - name: grpc
+      port: 7147
+      targetPort: 7147
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: blog-service
+  namespace: dev-workspace
+spec:
+  selector:
+    app: blog
+  ports:
+    - name: webapi
+      port: 5334
+      targetPort: 5334
+    - name: grpc
+      port: 7181
+      targetPort: 7181
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: askexpert-service
+  namespace: dev-workspace
+spec:
+  selector:
+    app: askexpert
+  ports:
+    - name: webapi
+      port: 5333
+      targetPort: 5333
+    - name: grpc
+      port: 7180
+      targetPort: 7180
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: knowledgeagg-service
+  namespace: dev-workspace
+spec:
+  selector:
+    app: knowledgeagg
+  ports:
+    - name: webapi
+      port: 5555
+      targetPort: 5555
+    - name: grpc
+      port: 7149
+      targetPort: 7149
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: committee-service
+  namespace: dev-workspace
+spec:
+  selector:
+    app: committee
+  ports:
+    - name: webapi
+      port: 5222
+      targetPort: 5222
+    - name: grpc
+      port: 7168
+      targetPort: 7168
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: committeeagg-service
+  namespace: dev-workspace
+spec:
+  selector:
+    app: committeeagg
+  ports:
+    - name: webapi
+      port: 5399
+      targetPort: 5399
+    - name: grpc
+      port: 7350
+      targetPort: 7350
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: orgdefination-service
+  namespace: dev-workspace
+spec:
+  selector:
+    app: orgdefination
+  ports:
+    - name: webapi
+      port: 5300
+      targetPort: 5300
+    - name: grpc
+      port: 7345
+      targetPort: 7345
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: digitalagg-service
+  namespace: dev-workspace
+spec:
+  selector:
+    app: digitalagg
+  ports:
+    - name: webapi
+      port: 5301
+      targetPort: 5301
+    - name: grpc
+      port: 7346
+      targetPort: 7346
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: digitalnews-service
+  namespace: dev-workspace
+spec:
+  selector:
+    app: digitalnews
+  ports:
+    - name: webapi
+      port: 5299
+      targetPort: 5299
+    - name: grpc
+      port: 7245
+      targetPort: 7245
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: notification-service
+  namespace: dev-workspace
+spec:
+  selector:
+    app: notification
+  ports:
+    - name: webapi
+      port: 5128
+      targetPort: 5128
+    - name: grpc
+      port: 7188
+      targetPort: 7188
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: notificationagg-service
+  namespace: dev-workspace
+spec:
+  selector:
+    app: notificationagg
+  ports:
+    - name: webapi
+      port: 5085
+      targetPort: 5085
+    - name: grpc
+      port: 7009
+      targetPort: 7009
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: pmo-service
+  namespace: dev-workspace
+spec:
+  selector:
+    app: pmo
+  ports:
+    - name: webapi
+      port: 5400
+      targetPort: 5400
+    - name: grpc
+      port: 7400
+      targetPort: 7400
+      
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: pmoagg-service
+  namespace: dev-workspace
+spec:
+  selector:
+    app: pmoagg
+  ports:
+    - name: webapi
+      port: 5401
+      targetPort: 5401
+    - name: grpc
+      port: 7401
+      targetPort: 7401
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: taskmanagementrelease1-service
+  namespace: dev-workspace
+spec:
+  selector:
+    app: taskmanagementrelease1
+  ports:
+    - name: webapi
+      port: 5600
+      targetPort: 5600
+    - name: grpc
+      port: 7600
+      targetPort: 7600
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: taskmanagementagg-service
+  namespace: dev-workspace
+spec:
+  selector:
+    app: taskmanagementagg
+  ports:
+    - name: webapi
+      port: 5602
+      targetPort: 5602
+    - name: grpc
+      port: 7602
+      targetPort: 7602
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: taskmanagementv2-service
+  namespace: dev-workspace
+spec:
+  selector:
+    app: taskmanagementv2
+  ports:
+    - name: webapi
+      port: 5601
+      targetPort: 5601
+    - name: grpc
+      port: 7601
+      targetPort: 7601
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: events-service
+  namespace: dev-workspace
+spec:
+  selector:
+    app: events
+  ports:
+    - name: webapi
+      port: 5302
+      targetPort: 5302
+    - name: grpc
+      port: 7347
+      targetPort: 7347
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: circulars-service
+  namespace: dev-workspace
+spec:
+  selector:
+    app: circulars
+  ports:
+    - name: webapi
+      port: 5303
+      targetPort: 5303
+    - name: grpc
+      port: 7348
+      targetPort: 7348
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: visitormanagement-service
+  namespace: dev-workspace
+spec:
+  selector:
+    app: visitormanagement
+  ports:
+    - name: webapi
+      port: 5149
+      targetPort: 5149
+    - name: grpc
+      port: 7121
+      targetPort: 7121
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: visitormanagementagg-service
+  namespace: dev-workspace
+spec:
+  selector:
+    app: visitormanagementagg
+  ports:
+    - name: webapi
+      port: 5046
+      targetPort: 5046
+    - name: grpc
+      port: 7173
+      targetPort: 7173
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: dynamicapi-service
+  namespace: dev-workspace
+spec:
+  selector:
+    app: dynamicapi
+  ports:
+    - name: webapi
+      port: 5249
+      targetPort: 5249
+    - name: grpc
+      port: 7212
+      targetPort: 7212
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: strategymanagement-service
+  namespace: dev-workspace
+spec:
+  selector:
+    app: strategymanagement
+  ports:
+    - name: webapi
+      port: 5275
+      targetPort: 5275
+    - name: grpc
+      port: 7069
+      targetPort: 7069
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: strategymanagementaggregator-service
+  namespace: dev-workspace
+spec:
+  selector:
+    app: strategymanagementaggregator
+  ports:
+    - name: webapi
+      port: 5550
+      targetPort: 5550
+    - name: grpc
+      port: 7215
+      targetPort: 7215
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: training-service
+  namespace: dev-workspace
+spec:
+  selector:
+    app: training
+  ports:
+    - name: webapi
+      port: 5191
+      targetPort: 5191
+    - name: grpc
+      port: 7199
+      targetPort: 7199
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: training-aggregator-service
+  namespace: dev-workspace
+spec:
+  selector:
+    app: training-aggregator
+  ports:
+    - name: webapi
+      port: 5349
+      targetPort: 5349
+    - name: grpc
+      port: 7233
+      targetPort: 7233
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: legalmanagement-service
+  namespace: dev-workspace
+spec:
+  selector:
+    app: legalmanagement
+  ports:
+    - name: webapi
+      port: 5154
+      targetPort: 5154
+    - name: grpc
+      port: 7165
+      targetPort: 7165
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: legalmanagement-aggregator-service
+  namespace: dev-workspace
+spec:
+  selector:
+    app: legalmanagement-aggregator
+  ports:
+    - name: webapi
+      port: 5134
+      targetPort: 5134
+    - name: grpc
+      port: 7290
+      targetPort: 7290   
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: strategictelecom-aggregator-service
+  namespace: dev-workspace
+spec:
+  selector:
+    app: strategictelecom-aggregator
+  ports:
+    - name: webapi
+      port: 5024
+      targetPort: 5024
+    - name: grpc
+      port: 7288
+      targetPort: 7288                
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: strategictelecomloyalty-service
+  namespace: dev-workspace
+spec:
+  selector:
+    app: strategictelecomloyalty
+  ports:
+    - name: webapi
+      port: 5138
+      targetPort: 5138
+    - name: grpc
+      port: 7256
+      targetPort: 7256
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: strategictelecomthanks-service
+  namespace: dev-workspace
+spec:
+  selector:
+    app: strategictelecomthanks
+  ports:
+    - name: webapi
+      port: 5288
+      targetPort: 5288
+    - name: grpc
+      port: 7138
+      targetPort: 7138
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: strategictelecomcongratulations-service
+  namespace: dev-workspace
+spec:
+  selector:
+    app: strategictelecomcongratulations
+  ports:
+    - name: webapi
+      port: 5245
+      targetPort: 5245
+    - name: grpc
+      port: 7235
+      targetPort: 7235
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: strategictelecommedals-service
+  namespace: dev-workspace
+spec:
+  selector:
+    app: strategictelecommedals
+  ports:
+    - name: webapi
+      port: 5289
+      targetPort: 5289
+    - name: grpc
+      port: 7139
+      targetPort: 7139
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: riskmanagement-service
+  namespace: dev-workspace
+spec:
+  selector:
+    app: riskmanagement
+  ports:
+    - name: webapi
+      port: 5039
+      targetPort: 5039
+    - name: grpc
+      port: 7299
+      targetPort: 7299  
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: riskmanagement-aggregator-service
+  namespace: dev-workspace
+spec:
+  selector:
+    app: riskmanagement-aggregator
+  ports:
+    - name: webapi
+      port: 5106
+      targetPort: 5106
+    - name: grpc
+      port: 7003
+      targetPort: 7003 

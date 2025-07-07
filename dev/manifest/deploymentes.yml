@@ -1,0 +1,24 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  namespace: argocd-apps
+  name: dev-workspace
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  revisionHistoryLimit: 2
+  project: dev-project
+  source:
+    repoURL: 'https://gitlab.rega.gov.sa/rega-softwares/workspace-devops.git'
+    path: dev/manifest
+    targetRevision: HEAD
+  destination:
+    # here we specify the namespace where the app should be deployed
+    namespace: dev-workspace
+    server: 'https://kubernetes.default.svc' 
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
