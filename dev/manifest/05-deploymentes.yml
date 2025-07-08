@@ -20,7 +20,7 @@ spec:
           high-end: "true"
       containers:
       - name: 4ebusinesscore-frontend
-        image: 4edeploy/4ebusinesscore-qimah-main-dev:2.0.263
+        image: 4edeploy/4ebusinesscore-qimah-main-test:2.0.263
         ports:
         - name: default
           containerPort: 3000
@@ -48,7 +48,7 @@ spec:
           high-end: "true"
       containers:
       - name: 4ebusinesscore-frontend-legalmanagement
-        image: 4edeploy/4ebusinesscore-qimah-legalmanagement-dev:2.0.263
+        image: 4edeploy/4ebusinesscore-qimah-legalmanagement-test:2.0.263
         ports:
         - name: default
           containerPort: 3000
@@ -76,7 +76,7 @@ spec:
           high-end: "true"
       containers:
       - name: 4ebusinesscore-frontend-riskmanagement
-        image: 4edeploy/4ebusinesscore-qimah-riskmanagement-dev:2.0.263
+        image: 4edeploy/4ebusinesscore-qimah-riskmanagement-test:2.0.263
         ports:
         - name: default
           containerPort: 3000
@@ -104,7 +104,7 @@ spec:
           high-end: "true"
       containers:
       - name: 4ebusinesscore-frontend-strategiccommunication
-        image: 4edeploy/4ebusinesscore-qimah-strategiccommunication-dev:2.0.263
+        image: 4edeploy/4ebusinesscore-qimah-strategiccommunication-test:2.0.263
         ports:
         - name: default
           containerPort: 3000
