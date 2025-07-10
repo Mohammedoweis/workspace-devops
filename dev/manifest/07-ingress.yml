@@ -14,28 +14,28 @@ spec:
       http:
         paths:
           - path: /
-            pathType: Prefix
+            pathType: ImplementationSpecific
             backend:
               service:
                 name: frontend-service
                 port:
                   number: 3000
           - path: /legalmanagement
-            pathType: Prefix
+            pathType: ImplementationSpecific
             backend:
               service:
                 name: frontend-legalmanagement-service
                 port:
                   number: 3000
           - path: /riskmanagement
-            pathType: Prefix
+            pathType: ImplementationSpecific
             backend:
               service:
                 name: frontend-riskmanagement-service
                 port:
                   number: 3000
           - path: /strategiccommunication
-            pathType: Prefix
+            pathType: ImplementationSpecific
             backend:
               service:
                 name: frontend-strategiccommunication-service
@@ -60,7 +60,7 @@ spec:
     http:
       paths:
       - path: /usermanagement(/|$)(.*)
-        pathType: Prefix
+        pathType: ImplementationSpecific
         backend:
           service:
             name: usermanagement-service
@@ -82,7 +82,7 @@ spec:
     http:
       paths:
       - path: /usermanagementgrpc(/|$)(.*)
-        pathType: Prefix
+        pathType: ImplementationSpecific
         backend:
           service:
             name: usermanagement-service
@@ -107,7 +107,7 @@ spec:
     http:
       paths:
       - path: /controlpanelagg(/|$)(.*)
-        pathType: Prefix
+        pathType: ImplementationSpecific
         backend:
           service:
             name: controlpanelagg-service
@@ -132,7 +132,7 @@ spec:
     http:
       paths:
       - path: /org(/|$)(.*)
-        pathType: Prefix
+        pathType: ImplementationSpecific
         backend:
           service:
             name: org-service
@@ -154,7 +154,7 @@ spec:
     http:
       paths:
       - path: /orggrpc(/|$)(.*)
-        pathType: Prefix
+        pathType: ImplementationSpecific
         backend:
           service:
             name: org-service
@@ -182,7 +182,7 @@ spec:
     http:
       paths:
       - path: /platformsetting(/|$)(.*)
-        pathType: Prefix
+        pathType: ImplementationSpecific
         backend:
           service:
             name: platformsetting-service
@@ -207,7 +207,7 @@ spec:
     http:
       paths:
       - path: /subsystemsetting(/|$)(.*)
-        pathType: Prefix
+        pathType: ImplementationSpecific
         backend:
           service:
             name: subsystemsetting-service
@@ -228,7 +228,7 @@ spec:
     http:
       paths:
       - path: /ticketingsla(/|$)(.*)
-        pathType: Prefix
+        pathType: ImplementationSpecific
         backend:
           service:
             name: ticketingsla-service
@@ -253,7 +253,7 @@ spec:
     http:
       paths:
       - path: /ticketingserviceops(/|$)(.*)
-        pathType: Prefix
+        pathType: ImplementationSpecific
         backend:
           service:
             name: ticketingserviceops-service
@@ -278,7 +278,7 @@ spec:
     http:
       paths:
       - path: /ticketingfaq(/|$)(.*)
-        pathType: Prefix
+        pathType: ImplementationSpecific
         backend:
           service:
             name: ticketingfaq-service
@@ -299,7 +299,7 @@ spec:
     http:
       paths:
       - path: /ticketingservicemanagement(/|$)(.*)
-        pathType: Prefix
+        pathType: ImplementationSpecific
         backend:
           service:
             name: ticketingservicemanagement-service
@@ -320,7 +320,7 @@ spec:
     http:
       paths:
       - path: /ticketingagg(/|$)(.*)
-        pathType: Prefix
+        pathType: ImplementationSpecific
         backend:
           service:
             name: ticketingagg-service
@@ -345,7 +345,7 @@ spec:
     http:
       paths:
       - path: /dynamicworkflow(/|$)(.*)
-        pathType: Prefix
+        pathType: ImplementationSpecific
         backend:
           service:
             name: dynamicworkflow-service
@@ -371,7 +371,7 @@ spec:
     http:
       paths:
       - path: /dynamicworkflowgrpc(/|$)(.*)
-        pathType: Prefix
+        pathType: ImplementationSpecific
         backend:
           service:
             name: dynamicworkflow-service
@@ -396,7 +396,7 @@ spec:
     http:
       paths:
       - path: /dynamicworkflowagg(/|$)(.*)
-        pathType: Prefix
+        pathType: ImplementationSpecific
         backend:
           service:
             name: dynamicworkflowagg-service
@@ -420,7 +420,7 @@ spec:
     http:
       paths:
       - path: /ideabank(/|$)(.*)
-        pathType: Prefix
+        pathType: ImplementationSpecific
         backend:
           service:
             name: ideabank-service
@@ -443,7 +443,7 @@ spec:
     http:
       paths:
       - path: /challenges(/|$)(.*)
-        pathType: Prefix
+        pathType: ImplementationSpecific
         backend:
           service:
             name: challenges-service
@@ -466,7 +466,7 @@ spec:
     http:
       paths:
       - path: /knowledge(/|$)(.*)
-        pathType: Prefix
+        pathType: ImplementationSpecific
         backend:
           service:
             name: knowledge-service
@@ -489,7 +489,7 @@ spec:
     http:
       paths:
       - path: /blog(/|$)(.*)
-        pathType: Prefix
+        pathType: ImplementationSpecific
         backend:
           service:
             name: blog-service
@@ -510,7 +510,7 @@ spec:
     http:
       paths:
       - path: /askexpert(/|$)(.*)
-        pathType: Prefix
+        pathType: ImplementationSpecific
         backend:
           service:
             name: askexpert-service
@@ -531,7 +531,7 @@ spec:
     http:
       paths:
       - path: /knowledgeagg(/|$)(.*)
-        pathType: Prefix
+        pathType: ImplementationSpecific
         backend:
           service:
             name: knowledgeagg-service
@@ -554,7 +554,7 @@ spec:
     http:
       paths:
       - path: /committee(/|$)(.*)
-        pathType: Prefix
+        pathType: ImplementationSpecific
         backend:
           service:
             name: committee-service
@@ -575,7 +575,7 @@ spec:
     http:
       paths:
       - path: /committeeagg(/|$)(.*)
-        pathType: Prefix
+        pathType: ImplementationSpecific
         backend:
           service:
             name: committeeagg-service
@@ -598,7 +598,7 @@ spec:
     http:
       paths:
       - path: /orgdefination(/|$)(.*)
-        pathType: Prefix
+        pathType: ImplementationSpecific
         backend:
           service:
             name: orgdefination-service
@@ -623,7 +623,7 @@ spec:
     http:
       paths:
       - path: /digitalagg(/|$)(.*)
-        pathType: Prefix
+        pathType: ImplementationSpecific
         backend:
           service:
             name: digitalagg-service
@@ -650,7 +650,7 @@ spec:
     http:
       paths:
       - path: /digitalnews(/|$)(.*)
-        pathType: Prefix
+        pathType: ImplementationSpecific
         backend:
           service:
             name: digitalnews-service
@@ -671,7 +671,7 @@ spec:
     http:
       paths:
       - path: /notification(/|$)(.*)
-        pathType: Prefix
+        pathType: ImplementationSpecific
         backend:
           service:
             name: notification-service
@@ -692,7 +692,7 @@ spec:
     http:
       paths:
       - path: /notificationagg(/|$)(.*)
-        pathType: Prefix
+        pathType: ImplementationSpecific
         backend:
           service:
             name: notificationagg-service
@@ -713,7 +713,7 @@ spec:
     http:
       paths:
       - path: /pmo(/|$)(.*)
-        pathType: Prefix
+        pathType: ImplementationSpecific
         backend:
           service:
             name: pmo-service
@@ -734,7 +734,7 @@ spec:
     http:
       paths:
       - path: /pmoagg(/|$)(.*)
-        pathType: Prefix
+        pathType: ImplementationSpecific
         backend:
           service:
             name: pmoagg-service
@@ -755,7 +755,7 @@ spec:
     http:
       paths:
       - path: /taskmanagementrelease1(/|$)(.*)
-        pathType: Prefix
+        pathType: ImplementationSpecific
         backend:
           service:
             name: taskmanagementrelease1-service
@@ -776,7 +776,7 @@ spec:
     http:
       paths:
       - path: /taskmanagementagg(/|$)(.*)
-        pathType: Prefix
+        pathType: ImplementationSpecific
         backend:
           service:
             name: taskmanagementagg-service
@@ -797,7 +797,7 @@ spec:
     http:
       paths:
       - path: /taskmanagementv2(/|$)(.*)
-        pathType: Prefix
+        pathType: ImplementationSpecific
         backend:
           service:
             name: taskmanagementv2-service
@@ -820,7 +820,7 @@ spec:
     http:
       paths:
       - path: /events(/|$)(.*)
-        pathType: Prefix
+        pathType: ImplementationSpecific
         backend:
           service:
             name: events-service
@@ -843,7 +843,7 @@ spec:
     http:
       paths:
       - path: /circulars(/|$)(.*)
-        pathType: Prefix
+        pathType: ImplementationSpecific
         backend:
           service:
             name: circulars-service
@@ -868,7 +868,7 @@ spec:
     http:
       paths:
       - path: /visitor(/|$)(.*)
-        pathType: Prefix
+        pathType: ImplementationSpecific
         backend:
           service:
             name: visitormanagement-service
@@ -893,7 +893,7 @@ spec:
     http:
       paths:
       - path: /visitoragg(/|$)(.*)
-        pathType: Prefix
+        pathType: ImplementationSpecific
         backend:
           service:
             name: visitormanagementagg-service
@@ -918,7 +918,7 @@ spec:
     http:
       paths:
       - path: /dynamicapi(/|$)(.*)
-        pathType: Prefix
+        pathType: ImplementationSpecific
         backend:
           service:
             name: dynamicapi-service
@@ -943,7 +943,7 @@ spec:
     http:
       paths:
       - path: /strategymanagement(/|$)(.*)
-        pathType: Prefix
+        pathType: ImplementationSpecific
         backend:
           service:
             name: strategymanagement-service
@@ -968,7 +968,7 @@ spec:
     http:
       paths:
       - path: /strategymanagementaggregator(/|$)(.*)
-        pathType: Prefix
+        pathType: ImplementationSpecific
         backend:
           service:
             name: strategymanagementaggregator-service
@@ -993,7 +993,7 @@ spec:
     http:
       paths:
       - path: /training(/|$)(.*)
-        pathType: Prefix
+        pathType: ImplementationSpecific
         backend:
           service:
             name: training-service
@@ -1018,7 +1018,7 @@ spec:
     http:
       paths:
       - path: /trainingagg(/|$)(.*)
-        pathType: Prefix
+        pathType: ImplementationSpecific
         backend:
           service:
             name: training-aggregator-service
@@ -1043,7 +1043,7 @@ spec:
     http:
       paths:
       - path: /legal(/|$)(.*)
-        pathType: Prefix
+        pathType: ImplementationSpecific
         backend:
           service:
             name: legalmanagement-service
@@ -1068,7 +1068,7 @@ spec:
     http:
       paths:
       - path: /legalagg(/|$)(.*)
-        pathType: Prefix
+        pathType: ImplementationSpecific
         backend:
           service:
             name: legalmanagement-aggregator-service
@@ -1093,7 +1093,7 @@ spec:
     http:
       paths:
       - path: /strategictelecomagg(/|$)(.*)
-        pathType: Prefix
+        pathType: ImplementationSpecific
         backend:
           service:
             name: strategictelecom-aggregator-service
@@ -1118,7 +1118,7 @@ spec:
     http:
       paths:
       - path: /strategictelecomloyalty(/|$)(.*)
-        pathType: Prefix
+        pathType: ImplementationSpecific
         backend:
           service:
             name: strategictelecomloyalty-service
@@ -1143,7 +1143,7 @@ spec:
     http:
       paths:
       - path: /strategictelecomthanks(/|$)(.*)
-        pathType: Prefix
+        pathType: ImplementationSpecific
         backend:
           service:
             name: strategictelecomthanks-service
@@ -1168,7 +1168,7 @@ spec:
     http:
       paths:
       - path: /strategictelecomcongratulations(/|$)(.*)
-        pathType: Prefix
+        pathType: ImplementationSpecific
         backend:
           service:
             name: strategictelecomcongratulations-service
@@ -1193,7 +1193,7 @@ spec:
     http:
       paths:
       - path: /strategictelecommedals(/|$)(.*)
-        pathType: Prefix
+        pathType: ImplementationSpecific
         backend:
           service:
             name: strategictelecommedals-service
@@ -1218,7 +1218,7 @@ spec:
     http:
       paths:
       - path: /risk(/|$)(.*)
-        pathType: Prefix
+        pathType: ImplementationSpecific
         backend:
           service:
             name: riskmanagement-service
@@ -1243,7 +1243,7 @@ spec:
     http:
       paths:
       - path: /riskagg(/|$)(.*)
-        pathType: Prefix
+        pathType: ImplementationSpecific
         backend:
           service:
             name: riskmanagement-aggregator-service
