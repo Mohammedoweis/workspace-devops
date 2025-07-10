@@ -20,7 +20,7 @@ spec:
           high-end: "true"
       containers:
       - name: 4ebusinesscore-frontend
-        image: 4edeploy/4ebusinesscore-qimah-main-test:2.0.263
+        image: 4edeploy/fronttest:2.0.263
         ports:
         - name: default
           containerPort: 3000
